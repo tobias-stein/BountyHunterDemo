@@ -102,7 +102,7 @@ static constexpr float				MAX_BOUNTY_SCALE					{ 3.0f };
 static constexpr float				BOUNTY_COLOR_R						{ 1.0f };
 static constexpr float				BOUNTY_COLOR_G						{ 1.0f };
 static constexpr float				BOUNTY_COLOR_B						{ 1.0f };
-static constexpr float				BOUNTY_COLOR_A						{ 0.0f };
+static constexpr float				BOUNTY_COLOR_A						{ 1.0f };
 
 /// Summary:	The default player pocket size, that is, how many bounty he/she can carry at a time.
 static constexpr float				PLAYER_POCKET_SIZE					{ 100.0f }; 

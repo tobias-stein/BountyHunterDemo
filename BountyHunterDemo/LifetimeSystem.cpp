@@ -32,20 +32,10 @@ void LifetimeSystem::Update(float dt)
 			this->m_WorldSystem->KillGameObject((*ltc)->GetOwner());
 
 			// remove from active lifetime component list
-			this->m_ActiveLifetimeComponents.erase(ltc++);
+			ltc = this->m_ActiveLifetimeComponents.erase(ltc);
 		}
-		else
-		{
-			MaterialComponent* mc = ECS::ECS_Engine->GetComponentManager()->GetComponent<MaterialComponent>((*ltc)->GetOwner());
-			if (mc != nullptr)
-			{
-				Color4f color = mc->GetColor();
-				color.a = glm::min<float>((*ltc)->currentLifetime / (*ltc)->minLifetime, 1.0f);
-				mc->SetColor(color);
-			}
 
-			++ltc;
-		}
+		ltc++;
 	}
 }
 
