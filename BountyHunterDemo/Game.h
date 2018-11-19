@@ -54,7 +54,12 @@ public:
 	/// EVENT HANDLER
 	///-------------------------------------------------------------------------------------------------
 
+	void OnRestartGame(const RestartGameEvent* event);
+	void OnQuitGame(const QuitGameEvent* event);
+	void OnToggleFullscreen(const ToggleFullscreenEvent* event);
+
 	void OnCollisionBegin(const CollisionBeginEvent* event);
+
 	void OnStashFull(const StashFull* event);
 
 private:
@@ -110,7 +115,7 @@ public:
 		The init method will conatin all code that will initialize the new game application
 		instance.
 	*/
-	void Initialize(int width, int height);
+	void Initialize(int width, int height, bool fullscreen = false);
 
 	///-------------------------------------------------------------------------------------------------
 	/// Fn:	void Game::Step();
