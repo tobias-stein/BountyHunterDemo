@@ -1,7 +1,7 @@
 ///-------------------------------------------------------------------------------------------------
-/// File:	BountyHunterDemo.cpp.
+/// File:	BountyHunterAI.cpp.
 ///
-/// Summary:	Application entry point.
+/// Summary:	The bounty hunter app entry point.
 ///-------------------------------------------------------------------------------------------------
 
 #include "Game.h"

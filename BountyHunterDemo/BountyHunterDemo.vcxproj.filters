@@ -264,9 +264,6 @@
     <ClCompile Include="AICollectorController.cpp">
       <Filter>Source Files\Controller\Controllers</Filter>
     </ClCompile>
-    <ClCompile Include="BountyHunterDemo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\ThirdParty\Box2D\Box2D\Common\b2BlockAllocator.cpp">
       <Filter>Source Files\Physics\Box2D</Filter>
     </ClCompile>
@@ -464,6 +461,9 @@
     </ClCompile>
     <ClCompile Include="CollectorAvoider.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BountyHunterAI.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
