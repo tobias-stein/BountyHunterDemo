@@ -11,13 +11,6 @@
 #include "GameObject.h"
 #include "SpawnComponent.h"
 
-#ifdef DEBUG_SHOW_SPAWNS
-#include "ShapeComponent.h"
-#include "MaterialComponent.h"
-#include "ShapeGenerator.h"
-#include "MaterialGenerator.h"
-#endif // DEBUG_SHOW_SPAWNS
-
 class GameObjectSpawn : public GameObject<GameObjectSpawn>
 {
 public:

@@ -132,18 +132,6 @@ static constexpr float					PLAYER_COLOR[MAX_PLAYER][4]			{
 
 // <<<< DEBUG SETTINGS >>>>
 
-///-------------------------------------------------------------------------------------------------
-/// Def:	DEBUG_SHOW_SPAWNS
-///
-/// Summary:	If defined, show spawns
-///
-/// Author:	Tobias Stein
-///
-/// Date:	14/10/2017
-///-------------------------------------------------------------------------------------------------
-
-//#define DEBUG_SHOW_SPAWNS													1
-
 /// Summary:	Enable/Disable CheatSystem
 static constexpr bool					ALLOW_CHEATS						{ true };
 
