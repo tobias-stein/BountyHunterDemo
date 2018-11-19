@@ -43,7 +43,7 @@ void Game::InitializeSDL()
 }
 
 
-void Game::Initialize(int width, int height, bool fullscreen) 
+void Game::Initialize(int width, int height) 
 {
 	this->m_WindowWidth		= width;
 	this->m_WindowHeight	= height;
