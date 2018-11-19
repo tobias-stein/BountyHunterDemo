@@ -13,8 +13,9 @@ int main(int argc, const char* args[])
 	// initialize game
 	g_GameInstance->Initialize(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GAME_WINDOW_FULLSCREEN);
 
-	// enter game main-loop
-	g_GameInstance->Run();
+	// run 100 frames
+	for(int i = 0; i < 100; ++i)
+		g_GameInstance->Step();
 
 	delete g_GameInstance;
 	g_GameInstance = nullptr;

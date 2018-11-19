@@ -87,11 +87,8 @@ enum CollisionMask
 enum GameState 
 {
 	NOT_INITIALIZED = 0,
-	INITIALIZED,
 	RESTARTED,
-	STARTED,
 	RUNNING,
-	PAUSED,
 	GAMEOVER,
 	TERMINATED,
 
@@ -101,11 +98,8 @@ enum GameState
 static constexpr const char* GameState2String[]
 {
 	"NOT_INITIALIZED",
-	"INITIALIZED",
 	"RESTARTED",
-	"STARTED",
 	"RUNNING",
-	"PAUSED",
 	"GAMEOVER",
 	"TERMINATED",
 };

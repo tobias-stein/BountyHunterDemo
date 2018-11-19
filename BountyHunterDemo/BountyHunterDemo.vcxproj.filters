@@ -79,9 +79,6 @@
     <Filter Include="Source Files\Entities\Camera">
       <UniqueIdentifier>{18b0a020-84a4-4fa9-a1e0-6a102bc1800f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\FSM">
-      <UniqueIdentifier>{44fe7365-619d-4f56-8453-b37a7af8d381}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Spawn">
       <UniqueIdentifier>{972ad7b5-3b22-457e-b35d-3869dd4bb544}</UniqueIdentifier>
     </Filter>
@@ -118,12 +115,6 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{3542f671-482e-4cb8-98f2-5b7dab586504}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\util">
-      <UniqueIdentifier>{f8e39cc4-363e-47b1-9895-4bf06d74ba16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\util">
-      <UniqueIdentifier>{99296bc8-5d90-4977-8f6f-5d5eea2f0aa2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Controller\Controllers">
       <UniqueIdentifier>{960d7493-1e93-4def-b9a7-03c8c64749a1}</UniqueIdentifier>
     </Filter>
@@ -142,9 +133,6 @@
     <Filter Include="Source Files\Physics\Box2D">
       <UniqueIdentifier>{770e12ee-2640-4796-9aca-3b7535fab920}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game\Gamestates">
-      <UniqueIdentifier>{d4f66482-d122-4209-a335-0e52f5117039}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\AI">
       <UniqueIdentifier>{f9de8389-9ea6-4535-81c6-455f2e952818}</UniqueIdentifier>
     </Filter>
@@ -154,9 +142,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderSystem.cpp">
-      <Filter>Source Files\Systems</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
     <ClCompile Include="InputSystem.cpp">
@@ -251,9 +236,6 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="FPS.cpp">
-      <Filter>Source Files\util</Filter>
     </ClCompile>
     <ClCompile Include="PlayerSystem.cpp">
       <Filter>Source Files\Systems</Filter>
@@ -411,27 +393,6 @@
     <ClCompile Include="PhysicsSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="GS_INITIALIZED.cpp">
-      <Filter>Source Files\Game\Gamestates</Filter>
-    </ClCompile>
-    <ClCompile Include="GS_RESTARTED.cpp">
-      <Filter>Source Files\Game\Gamestates</Filter>
-    </ClCompile>
-    <ClCompile Include="GS_STARTED.cpp">
-      <Filter>Source Files\Game\Gamestates</Filter>
-    </ClCompile>
-    <ClCompile Include="GS_RUNNING.cpp">
-      <Filter>Source Files\Game\Gamestates</Filter>
-    </ClCompile>
-    <ClCompile Include="GS_PAUSED.cpp">
-      <Filter>Source Files\Game\Gamestates</Filter>
-    </ClCompile>
-    <ClCompile Include="GS_GAMEOVER.cpp">
-      <Filter>Source Files\Game\Gamestates</Filter>
-    </ClCompile>
-    <ClCompile Include="GS_TERMINATED.cpp">
-      <Filter>Source Files\Game\Gamestates</Filter>
-    </ClCompile>
     <ClCompile Include="GameEventHandler.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -467,9 +428,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MenuSystem.h">
-      <Filter>Header Files\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="InputSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
@@ -554,9 +512,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>Header Files\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleFSM.h">
-      <Filter>Header Files\FSM</Filter>
-    </ClInclude>
     <ClInclude Include="WorldSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
@@ -619,9 +574,6 @@
     </ClInclude>
     <ClInclude Include="GameConfiguration.h">
       <Filter>Header Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="FPS.h">
-      <Filter>Header Files\util</Filter>
     </ClInclude>
     <ClInclude Include="GameTypes.h">
       <Filter>Header Files\Game</Filter>

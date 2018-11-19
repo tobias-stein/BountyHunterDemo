@@ -6,34 +6,6 @@
 
 #include "Game.h"
 
-void Game::OnPauseGame(const PauseGameEvent* event)
-{
-	this->PushState(GameState::PAUSED);
-}
-
-void Game::OnResumeGame(const ResumeGameEvent* event)
-{
-	this->PopState();
-}
-
-void Game::OnRestartGame(const RestartGameEvent * event)
-{
-	if (this->IsPaused() == true)
-		PopState(false); // prevent state stack from filling up
-
-	this->ChangeState(GameState::RESTARTED);
-}
-
-void Game::OnQuitGame(const QuitGameEvent* event)
-{
-	this->ChangeState(GameState::TERMINATED);
-}
-
-void Game::OnToggleFullscreen(const ToggleFullscreenEvent* event)
-{
-	this->ToggleFullscreen();
-}
-
 void Game::OnCollisionBegin(const CollisionBeginEvent* event)
 {
 	ECS::IEntity* objectA = ECS::ECS_Engine->GetEntityManager()->GetEntity(event->objectA);
@@ -160,11 +132,6 @@ void Game::OnStashFull(const StashFull* event)
 	{
 		Player* player = ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerSystem>()->GetPlayer(stash->GetOwner());
 
-		SDL_Log("****************************************");
-		SDL_Log("Stash is full!\n");
-		SDL_Log("%s won the match!", player->GetPlayerName());
-		SDL_Log("****************************************");
-
-		ChangeState(GameState::GAMEOVER);
+		this->GameOver();
 	}
 }
