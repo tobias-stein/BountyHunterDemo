@@ -58,6 +58,7 @@ void Bounty::ShuffleBounty()
 	float scale = glm::lerp(MIN_BOUNTY_SCALE, MAX_BOUNTY_SCALE, alpha) * GLOBAL_SCALE;
 
 	this->m_ThisTransform->AsTransform()->SetScale(glm::vec3(scale));
-	this->m_ThisMaterial->SetColor(1.0f, 1.0f - alpha, 0.0f);
+
+	this->m_ThisMaterial->SetColor(BOUNTY_COLOR_R, BOUNTY_COLOR_G, BOUNTY_COLOR_B, BOUNTY_COLOR_A);
 	this->m_ThisRigidbody->SetScale(glm::vec2(scale));
 }

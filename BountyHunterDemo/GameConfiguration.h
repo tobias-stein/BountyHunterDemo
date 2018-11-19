@@ -8,6 +8,8 @@
 #define __GAME_CONFIG_H__
 
 
+// TODO: implement load/save configuration mechanism
+
 /// Summary:	The game title.
 static constexpr const char*		GAME_TITLE							{ "BountyHunter Demo" };
 
@@ -59,7 +61,7 @@ static constexpr size_t				PHYSICS_POSITION_ITERATIONS			{ 3 };
 static constexpr float				GLOBAL_SCALE						{ 0.75f };
 
 /// Summary:	The max. player amount.
-static constexpr size_t				MAX_PLAYER							{ 16 };
+static constexpr size_t				MAX_PLAYER							{ 8 };
 
 /// Summary:	The max. amount of spawned bounty.
 static constexpr size_t				MAX_BOUNTY							{ 12 };
@@ -95,6 +97,12 @@ static constexpr float				MAX_BOUNTY_VALUE					{ 30.0f };
 /// Summary:	The minimum and maximum bounty scale.
 static constexpr float				MIN_BOUNTY_SCALE					{ 1.0f };
 static constexpr float				MAX_BOUNTY_SCALE					{ 3.0f };
+
+/// Summary:	Bounty color RGBA
+static constexpr float				BOUNTY_COLOR_R						{ 1.0f };
+static constexpr float				BOUNTY_COLOR_G						{ 1.0f };
+static constexpr float				BOUNTY_COLOR_B						{ 1.0f };
+static constexpr float				BOUNTY_COLOR_A						{ 0.0f };
 
 /// Summary:	The default player pocket size, that is, how many bounty he/she can carry at a time.
 static constexpr float				PLAYER_POCKET_SIZE					{ 100.0f }; 
