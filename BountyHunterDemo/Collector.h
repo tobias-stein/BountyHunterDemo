@@ -25,8 +25,6 @@ private:
 
 	float				m_CollectedBounty;
 
-	void UpdateColor();
-
 public:
 
 	Collector(GameObjectId spawnId);
@@ -48,7 +46,11 @@ public:
 	/// playerId - 	Identifier for the player.
 	///-------------------------------------------------------------------------------------------------
 
-	inline void SetPlayer(const PlayerId playerId) { this->m_PlayerId = playerId; }
+	inline void SetPlayer(const PlayerId playerId) 
+	{ 
+		this->m_ThisMaterial->SetColor(PLAYER_COLOR[playerId][0], PLAYER_COLOR[playerId][1], PLAYER_COLOR[playerId][2], PLAYER_COLOR[playerId][3]);
+		this->m_PlayerId = playerId; 
+	}
 
 	inline const PlayerId GetPlayer() const { return this->m_PlayerId; }
 

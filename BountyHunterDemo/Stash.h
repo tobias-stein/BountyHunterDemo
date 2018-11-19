@@ -24,8 +24,6 @@ private:
 
 	float					m_StashedBounty;
 
-	void UpdateColor();
-
 public:
 
 	Stash(PlayerId playerId);

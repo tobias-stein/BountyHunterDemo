@@ -25,7 +25,7 @@ Stash::Stash(PlayerId playerId) :
 	auto cc = AddComponent<CollisionComponent2D>(shape, GetComponent<TransformComponent>()->AsTransform()->GetScale(), CollisionCategory::Stash_Category, CollisionMask::Stash_Collision);
 	cc->isSensor = true;
 
-	UpdateColor();
+	this->m_ThisMaterial->SetColor(PLAYER_COLOR[playerId][0], PLAYER_COLOR[playerId][1], PLAYER_COLOR[playerId][2], PLAYER_COLOR[playerId][3]);
 }
 
 Stash::~Stash()
@@ -36,7 +36,6 @@ Stash::~Stash()
 
 void Stash::OnEnable()
 {
-	UpdateColor();
 	this->m_ThisRigidbody->m_Box2DBody->SetActive(true);
 }
 
@@ -56,12 +55,4 @@ void Stash::StashBounty(float bounty)
 	{
 		this->m_StashedBounty += bounty;
 	}
-
-	UpdateColor();
-}
-
-void Stash::UpdateColor()
-{
-	float alpha = this->m_StashedBounty / PLAYER_STASH_SIZE;
-	this->m_ThisMaterial->SetColor(0.0f, 1.0f - alpha, 1.0f);
 }

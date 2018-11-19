@@ -26,7 +26,6 @@ Collector::Collector(GameObjectId spawnId) :
 	this->m_ThisRigidbody = AddComponent<RigidbodyComponent>();
 	AddComponent<CollisionComponent2D>(shape, this->m_ThisTransform->AsTransform()->GetScale(), CollisionCategory::Player_Category, CollisionMask::Player_Collision);
 
-	UpdateColor();
 }
 
 Collector::~Collector()
@@ -37,8 +36,6 @@ Collector::~Collector()
 
 void Collector::OnEnable()
 {
-	UpdateColor();
-
 	this->m_ThisRigidbody->SetTransform(*this->m_ThisTransform->AsTransform());
 	this->m_ThisRigidbody->m_Box2DBody->SetLinearVelocity(b2Vec2_zero);
 	this->m_ThisRigidbody->m_Box2DBody->SetAngularVelocity(0.0f);
@@ -86,17 +83,9 @@ void Collector::StopMoving()
 void Collector::ResetCollectedBounty()
 {
 	this->m_CollectedBounty = 0.0f;
-	UpdateColor();
 }
 
 void Collector::CollectBounty(float bounty)
 {
 	this->m_CollectedBounty = glm::min<float>(this->m_CollectedBounty + bounty, PLAYER_POCKET_SIZE);
-	UpdateColor();
-}
-
-void Collector::UpdateColor()
-{
-	float alpha = this->m_CollectedBounty / PLAYER_POCKET_SIZE;
-	this->m_ThisMaterial->SetColor(1.0f - alpha, 0.0f, 1.0f);
 }
