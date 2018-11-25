@@ -165,48 +165,11 @@ void Game::Restart()
 
 
 	//------------------------------------------
-	// Create Player
-	//------------------------------------------
-
-	const float STEP = glm::two_pi<float>() / max(1.0f, (float)INT_SETTING(MAX_PLAYER));
-	const float R = (WORLD_BOUND_MAX[0] - WORLD_BOUND_MIN[0]) * 0.5f;
-
-	for (size_t i = 0; i < INT_SETTING(MAX_PLAYER); ++i)
-	{
-		const float angle = i * STEP;
-		const float xR = glm::cos(angle) * R;
-		const float yR = glm::sin(angle) * R;
-
-
-		Position spawnPosition(xR, yR, 0.0f);
-
-		Transform initialTransform = glm::translate(glm::mat4(1.0f), spawnPosition) * glm::rotate(angle + glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::vec3(2.0f));
-
-		// create collector spawn
-		GameObjectId collectorSpawn = worldSystem->AddGameObject<PlayerSpawn>(Transform(Position(xR, yR, 1.0f)), spawnPosition, angle + glm::radians(90.0f));
-
-
-		PlayerId playerId = INVALID_PLAYER_ID;
-		Player* player = nullptr;
-
-		// create human player
-		playerId = playerSystem->AddNewPlayer(DEFAULT_PLAYER_NAME);
-
-		// create stash and collector
-		GameObjectId playerStashId = worldSystem->AddGameObject<Stash>(glm::translate(glm::mat4(1.0f), Position(xR, yR, 1.0f)) * glm::scale(glm::vec3(2.5f)), playerId);
-		GameObjectId collectorId = worldSystem->AddGameObject<Collector>(initialTransform, collectorSpawn);
-
-		player = playerSystem->GetPlayer(playerId);
-		player->SetStash(playerStashId);
-		player->SetController(new PlayerCollectorController(collectorId, playerId));
-	}
-
-
-	//------------------------------------------
 	// Create Bounty
 	//------------------------------------------
 
 	// create bounty spawn
+	const float R = (WORLD_BOUND_MAX[0] - WORLD_BOUND_MIN[0]) * 0.5f;
 	const float bountyHalfSpawnSize = R * 0.75f;
 	GameObjectId bountySpawnId = worldSystem->AddGameObject<BountySpawn>(Transform(Position(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, 0.0f, 1.0f), 0.0f, glm::vec3(bountyHalfSpawnSize, bountyHalfSpawnSize, 0.0f)), Position(0.0f, 0.0f, 0.0f), glm::vec2(bountyHalfSpawnSize, bountyHalfSpawnSize), 0.0f);
 	BountySpawn* bountySpawn = (BountySpawn*)ECS::ECS_Engine->GetEntityManager()->GetEntity(bountySpawnId);
@@ -224,6 +187,51 @@ void Game::Restart()
 
 	// put game into game state 'RESTARTED'
 	ChangeState(GameState::RESTARTED);
+}
+
+PlayerId Game::AddPlayer()
+{
+	assert(this->m_GameContext.NumPlayer < INT_SETTING(MAX_PLAYER));
+
+	WorldSystem* worldSystem = ECS::ECS_Engine->GetSystemManager()->AddSystem<WorldSystem>();
+	PlayerSystem* playerSystem = ECS::ECS_Engine->GetSystemManager()->AddSystem<PlayerSystem>();
+
+	const float STEP = glm::two_pi<float>() / max(1.0f, (float)INT_SETTING(MAX_PLAYER));
+	const float R = (WORLD_BOUND_MAX[0] - WORLD_BOUND_MIN[0]) * 0.5f;
+
+
+	const float angle = this->m_GameContext.NumPlayer * STEP;
+	const float xR = glm::cos(angle) * R;
+	const float yR = glm::sin(angle) * R;
+
+
+	Position spawnPosition(xR, yR, 0.0f);
+
+	Transform initialTransform = glm::translate(glm::mat4(1.0f), spawnPosition) * glm::rotate(angle + glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(glm::vec3(2.0f));
+
+	// create collector spawn
+	GameObjectId collectorSpawn = worldSystem->AddGameObject<PlayerSpawn>(Transform(Position(xR, yR, 1.0f)), spawnPosition, angle + glm::radians(90.0f));
+
+
+	PlayerId playerId = INVALID_PLAYER_ID;
+	Player* player = nullptr;
+
+	// create human player
+	playerId = playerSystem->AddNewPlayer(DEFAULT_PLAYER_NAME);
+
+	// create stash and collector
+	GameObjectId playerStashId = worldSystem->AddGameObject<Stash>(glm::translate(glm::mat4(1.0f), Position(xR, yR, 1.0f)) * glm::scale(glm::vec3(2.5f)), playerId);
+	GameObjectId collectorId = worldSystem->AddGameObject<Collector>(initialTransform, collectorSpawn);
+
+	player = playerSystem->GetPlayer(playerId);
+	player->SetStash(playerStashId);
+	player->SetController(new PlayerCollectorController(collectorId, playerId));
+
+
+	// increment player count
+	this->m_GameContext.NumPlayer++;
+
+	return PlayerId();
 }
 
 void Game::GameOver()
@@ -347,13 +355,17 @@ void Game::Step(ActionState** actions)
 		// else update game time ...
 		else if (this->m_GameContext.PlayTime > 0.0f)
 		{
-			PlayerSystem* playerSystem = ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerSystem>();
-			for (PlayerId p = 0; p < INT_SETTING(MAX_PLAYER); ++p)
+			// set player actions, iff any
+			if (actions != nullptr)
 			{
-				Player* player = playerSystem->GetPlayer(p);
-				if (player != nullptr && actions[p] != nullptr)
+				PlayerSystem* playerSystem = ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerSystem>();
+				for (PlayerId p = 0; p < INT_SETTING(MAX_PLAYER); ++p)
 				{
-					player->GetController().SetFrameAction(actions[p]);
+					Player* player = playerSystem->GetPlayer(p);
+					if (player != nullptr)
+					{
+						player->GetController().SetFrameAction(actions[p]);
+					}
 				}
 			}
 

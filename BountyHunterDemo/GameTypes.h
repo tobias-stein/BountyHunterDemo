@@ -112,11 +112,15 @@ struct GameContext
 	/// Summary:	The play time.
 	float	PlayTime;
 
-	GameContext()	
-	{
-		this->FreezeTime = FLOAT_SETTING(DEFAULT_FREEZE_TIME);
-		this->PlayTime = FLOAT_SETTING(DEFAULT_PLAY_TIME);
-	}
+
+	/// Summary:	Number of players.
+	int		NumPlayer;
+
+	GameContext() : 
+		FreezeTime(FLOAT_SETTING(DEFAULT_FREEZE_TIME)),
+		PlayTime(FLOAT_SETTING(DEFAULT_PLAY_TIME)),
+		NumPlayer(0)
+	{}
 
 }; // struct GameContext
 
@@ -132,13 +136,11 @@ struct GameContext
 
 struct ActionState
 {
+	/// Summary:	The forward speed. (0.0f = stop)
+	float move;
 
 	/// Summary:	The turn. Positive = turn left, Negative = turn right, 0.0f = stop moving.
 	float turn;
-
-
-	/// Summary:	The forward speed. (0.0f = stop)
-	float move;
 
 }; // struct ActionState
 

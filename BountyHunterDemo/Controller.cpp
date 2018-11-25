@@ -7,6 +7,7 @@
 #include "Controller.h"
 
 Controller::Controller(IController* controllerImpl) :
+	m_FrameAction(nullptr),
 	m_ControllerImpl(controllerImpl)
 {}
 

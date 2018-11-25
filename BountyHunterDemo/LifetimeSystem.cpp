@@ -34,8 +34,10 @@ void LifetimeSystem::Update(float dt)
 			// remove from active lifetime component list
 			ltc = this->m_ActiveLifetimeComponents.erase(ltc);
 		}
-
-		ltc++;
+		else
+		{
+			ltc++;
+		}
 	}
 }
 
