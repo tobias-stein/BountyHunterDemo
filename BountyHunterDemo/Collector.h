@@ -25,6 +25,9 @@ private:
 
 	float				m_CollectedBounty;
 
+	const float			m_MaxMoveSpeed;
+	const float			m_MaxTurnSpeed;
+
 public:
 
 	Collector(GameObjectId spawnId);
@@ -56,13 +59,35 @@ public:
 
 	inline float GetCollectedBounty() const { return this->m_CollectedBounty; }
 
-	void MoveForward(float speed);
-	void TurnLeft(float degrees);
-	void TurnRight(float degrees);
+	///-------------------------------------------------------------------------------------------------
+	/// Fn:	void Collector::Move(float speed);
+	///
+	/// Summary:	Moves the collector forward.
+	///
+	/// Author:	Tobias Stein
+	///
+	/// Date:	25/11/2018
+	///
+	/// Parameters:
+	/// speed - 	The speed.
+	///-------------------------------------------------------------------------------------------------
 
-	void Stop();
-	void StopTurning();
-	void StopMoving();
+	void Move(float move);
+
+	///-------------------------------------------------------------------------------------------------
+	/// Fn:	void Collector::Turn(float degrees);
+	///
+	/// Summary:	Turns the collector. Positive = turn left, Negative = turn right.
+	///
+	/// Author:	Tobias Stein
+	///
+	/// Date:	25/11/2018
+	///
+	/// Parameters:
+	/// degrees - 	The degrees.
+	///-------------------------------------------------------------------------------------------------
+
+	void Turn(float degrees);
 
 	void ResetCollectedBounty();
 	void CollectBounty(float bounty);

@@ -136,7 +136,7 @@ public:
 	void ResetRestitution();
 
 	/// Set the desired tangent speed for a conveyor belt behavior. In meters per second.
-	void SetTangentSpeed(float32 speed);
+	void SetTangentSpeed(float32 move);
 
 	/// Get the desired tangent speed. In meters per second.
 	float32 GetTangentSpeed() const;
@@ -336,9 +336,9 @@ inline void b2Contact::ResetRestitution()
 	m_restitution = b2MixRestitution(m_fixtureA->m_restitution, m_fixtureB->m_restitution);
 }
 
-inline void b2Contact::SetTangentSpeed(float32 speed)
+inline void b2Contact::SetTangentSpeed(float32 move)
 {
-	m_tangentSpeed = speed;
+	m_tangentSpeed = move;
 }
 
 inline float32 b2Contact::GetTangentSpeed() const

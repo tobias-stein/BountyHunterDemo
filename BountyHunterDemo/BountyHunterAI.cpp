@@ -15,8 +15,8 @@ int main(int argc, const char* args[])
 	game.Initialize(GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT);
 
 	// run 100 frames
-	for(int i = 0; i < 100; ++i)
-		game.Step();
+	//for(int i = 0; i < 100; ++i)
+	//	game.Step();
 
     return 0;
 }

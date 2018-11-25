@@ -20,7 +20,7 @@ void ControllerSystem::Update(float dt)
 {
 	for (auto C : this->m_Controller)
 	{
-		C->Update(dt);
+		C->Update();
 	}
 }
 

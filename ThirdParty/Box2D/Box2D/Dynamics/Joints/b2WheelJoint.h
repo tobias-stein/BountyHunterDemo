@@ -112,7 +112,7 @@ public:
 	void EnableMotor(bool flag);
 
 	/// Set the motor speed, usually in radians per second.
-	void SetMotorSpeed(float32 speed);
+	void SetMotorSpeed(float32 move);
 
 	/// Get the motor speed, usually in radians per second.
 	float32 GetMotorSpeed() const;

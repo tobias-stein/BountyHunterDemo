@@ -15,7 +15,9 @@
 
 Collector::Collector(GameObjectId spawnId) :
 	m_PlayerId(INVALID_PLAYER_ID),
-	m_CollectedBounty(0.0f)
+	m_CollectedBounty(0.0f),
+	m_MaxMoveSpeed(FLOAT_SETTING(COLLECTOR_MAX_MOVE_SPEED)),
+	m_MaxTurnSpeed(FLOAT_SETTING(COLLECTOR_MAX_TURN_SPEED))
 {
 	Shape shape = ShapeGenerator::CreateShape<TriangleShape>();
 
@@ -48,36 +50,15 @@ void Collector::OnDisable()
 }
 
 
-void Collector::MoveForward(float speed)
+void Collector::Move(float move)
 {
-	glm::vec2 vel = this->m_ThisTransform->AsTransform()->GetUp() * speed;
+	glm::vec2 vel = this->m_ThisTransform->AsTransform()->GetUp() * glm::clamp(move, 0.0f, this->m_MaxMoveSpeed);
 	this->m_ThisRigidbody->m_Box2DBody->SetLinearVelocity(b2Vec2(vel.x, vel.y));
 }
 
-void Collector::TurnLeft(float degrees_sec)
+void Collector::Turn(float degrees_sec)
 {
-	this->m_ThisRigidbody->m_Box2DBody->SetAngularVelocity(degrees_sec);
-}
-
-void Collector::TurnRight(float degrees_sec)
-{
-	this->m_ThisRigidbody->m_Box2DBody->SetAngularVelocity(-degrees_sec);
-}
-
-void Collector::Stop()
-{
-	this->m_ThisRigidbody->m_Box2DBody->SetLinearVelocity(b2Vec2_zero);
-	this->m_ThisRigidbody->m_Box2DBody->SetAngularVelocity(0.0f);
-}
-
-void Collector::StopTurning()
-{
-	this->m_ThisRigidbody->m_Box2DBody->SetAngularVelocity(0.0f);
-}
-
-void Collector::StopMoving()
-{
-	this->m_ThisRigidbody->m_Box2DBody->SetLinearVelocity(b2Vec2_zero);
+	this->m_ThisRigidbody->m_Box2DBody->SetAngularVelocity(glm::clamp(degrees_sec, -this->m_MaxMoveSpeed, this->m_MaxMoveSpeed));
 }
 
 void Collector::ResetCollectedBounty()

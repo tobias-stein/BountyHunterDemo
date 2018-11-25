@@ -77,10 +77,13 @@ GameObjectId Controller::GetPossessed()
 	return this->m_ControllerImpl->GetPossessed(); 
 }
 
-void Controller::Update(float dt) 
+void Controller::Update()
 { 
-	if (this->m_ControllerImpl == nullptr)
+	if (this->m_ControllerImpl == nullptr || this->m_FrameAction == nullptr)
 		return;
 
-	this->m_ControllerImpl->Update(dt); 
+	// invoke action
+	this->m_ControllerImpl->Update(this->m_FrameAction);
+	// clear last action
+	this->m_FrameAction = nullptr;
 }

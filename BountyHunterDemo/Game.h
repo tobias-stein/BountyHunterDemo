@@ -29,7 +29,6 @@
 #include "RespawnSystem.h"
 #include "ControllerSystem.h"
 #include "PhysicsSystem.h"
-#include "CheatSystem.h"
 
 // game entities
 #include "TabletopCamera.h"
@@ -41,9 +40,7 @@
 #include "Wall.h"
 
 // player controller
-#include "AICollectorController.h"
 #include "PlayerCollectorController.h"
-
 
 
 class Game : protected ECS::Event::IEventListener {
@@ -53,10 +50,6 @@ public:
 	///-------------------------------------------------------------------------------------------------
 	/// EVENT HANDLER
 	///-------------------------------------------------------------------------------------------------
-
-	void OnRestartGame(const RestartGameEvent* event);
-	void OnQuitGame(const QuitGameEvent* event);
-	void OnToggleFullscreen(const ToggleFullscreenEvent* event);
 
 	void OnCollisionBegin(const CollisionBeginEvent* event);
 
@@ -118,16 +111,19 @@ public:
 	void Initialize(int width, int height);
 
 	///-------------------------------------------------------------------------------------------------
-	/// Fn:	void Game::Step();
+	/// Fn:	void Game::Step(ActionState** actions);
 	///
-	/// Summary:	Advances the game state by one frame.
+	/// Summary:	Advances the game state by one frame. 
 	///
 	/// Author:	Tobias Stein
 	///
-	/// Date:	19/11/2018
+	/// Date:	25/11/2018
+	///
+	/// Parameters:
+	/// actions - 	[in] Actions per collector.
 	///-------------------------------------------------------------------------------------------------
 
-	void Step();
+	void Step(ActionState** actions);
 
 	///-------------------------------------------------------------------------------------------------
 	/// Fn:	void Game::Restart();

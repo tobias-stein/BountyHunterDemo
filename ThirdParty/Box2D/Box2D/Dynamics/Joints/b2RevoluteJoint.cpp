@@ -429,13 +429,13 @@ float32 b2RevoluteJoint::GetMotorTorque(float32 inv_dt) const
 	return inv_dt * m_motorImpulse;
 }
 
-void b2RevoluteJoint::SetMotorSpeed(float32 speed)
+void b2RevoluteJoint::SetMotorSpeed(float32 move)
 {
-	if (speed != m_motorSpeed)
+	if (move != m_motorSpeed)
 	{
 		m_bodyA->SetAwake(true);
 		m_bodyB->SetAwake(true);
-		m_motorSpeed = speed;
+		m_motorSpeed = move;
 	}
 }
 

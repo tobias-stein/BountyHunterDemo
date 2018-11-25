@@ -536,8 +536,8 @@ float32 b2PrismaticJoint::GetJointSpeed() const
 	float32 wA = bA->m_angularVelocity;
 	float32 wB = bB->m_angularVelocity;
 
-	float32 speed = b2Dot(d, b2Cross(wA, axis)) + b2Dot(axis, vB + b2Cross(wB, rB) - vA - b2Cross(wA, rA));
-	return speed;
+	float32 move = b2Dot(d, b2Cross(wA, axis)) + b2Dot(axis, vB + b2Cross(wB, rB) - vA - b2Cross(wA, rA));
+	return move;
 }
 
 bool b2PrismaticJoint::IsLimitEnabled() const
@@ -594,13 +594,13 @@ void b2PrismaticJoint::EnableMotor(bool flag)
 	}
 }
 
-void b2PrismaticJoint::SetMotorSpeed(float32 speed)
+void b2PrismaticJoint::SetMotorSpeed(float32 move)
 {
-	if (speed != m_motorSpeed)
+	if (move != m_motorSpeed)
 	{
 		m_bodyA->SetAwake(true);
 		m_bodyB->SetAwake(true);
-		m_motorSpeed = speed;
+		m_motorSpeed = move;
 	}
 }
 

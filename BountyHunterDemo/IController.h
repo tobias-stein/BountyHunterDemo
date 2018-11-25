@@ -44,7 +44,7 @@ public:
 
 	virtual GameObjectId GetPossessed() const = 0;
 
-	virtual void Update(float dt) = 0;
+	virtual void Update(const ActionState* action) = 0;
 
 }; // class IController
 

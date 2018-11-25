@@ -7,14 +7,16 @@
 #ifndef __CONTROLLER_H__
 #define __CONTROLLER_H__
 
-#include "PlayerController.h"
-#include "AIController.h"
+#include "GameTypes.h"
+#include "IController.h"
 
 class Controller
 {
 private:
 
 	IController*	m_ControllerImpl;
+
+	ActionState*	m_FrameAction;
 
 public:
 
@@ -34,7 +36,9 @@ public:
 
 	GameObjectId GetPossessed();
 
-	void Update(float dt);
+	inline void SetFrameAction(ActionState* action) { this->m_FrameAction = action; }
+
+	void Update();
 
 }; // class Controller
 

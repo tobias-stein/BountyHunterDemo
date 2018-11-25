@@ -59,12 +59,6 @@ void Game::Initialize(int width, int height)
 
 	// Create and initialize systems
 	{
-		if (ALLOW_CHEATS == true)
-		{
-			// CheatSystem
-			CheatSystem*		CHEATS = ECS::ECS_Engine->GetSystemManager()->AddSystem<CheatSystem>();
-		}
-
 		// InputSystem
 		InputSystem*		InS = ECS::ECS_Engine->GetSystemManager()->AddSystem<InputSystem>();
 
@@ -194,32 +188,17 @@ void Game::Restart()
 
 		PlayerId playerId = INVALID_PLAYER_ID;
 		Player* player = nullptr;
-		//if ((i == 0) && (HAS_HUMAN_PLAYER == true))
-		//{
-		//	// create human player
-		//	playerId = playerSystem->AddNewPlayer(DEFAULT_PLAYER_NAME);
 
-		//	// create stash and collector
-		//	GameObjectId playerStashId = worldSystem->AddGameObject<Stash>(glm::translate(glm::mat4(1.0f), Position(xR, yR, 1.0f)) * glm::scale(glm::vec3(2.5f)), playerId);
-		//	GameObjectId collectorId = worldSystem->AddGameObject<Collector>(initialTransform, collectorSpawn);
+		// create human player
+		playerId = playerSystem->AddNewPlayer(DEFAULT_PLAYER_NAME);
 
-		//	player = playerSystem->GetPlayer(playerId);
-		//	player->SetStash(playerStashId);
-		//	player->SetController(new PlayerCollectorController(collectorId, playerId));
-		//}
-		//else
-		//{
-			// create ai player
-			playerId = playerSystem->AddNewPlayer(("Player #" + std::to_string(i)).c_str());
+		// create stash and collector
+		GameObjectId playerStashId = worldSystem->AddGameObject<Stash>(glm::translate(glm::mat4(1.0f), Position(xR, yR, 1.0f)) * glm::scale(glm::vec3(2.5f)), playerId);
+		GameObjectId collectorId = worldSystem->AddGameObject<Collector>(initialTransform, collectorSpawn);
 
-			// create stash and collector
-			GameObjectId playerStashId = worldSystem->AddGameObject<Stash>(glm::translate(glm::mat4(1.0f), Position(xR, yR, 1.0f)) * glm::scale(glm::vec3(2.5f)), playerId);
-			GameObjectId collectorId = worldSystem->AddGameObject<Collector>(initialTransform, collectorSpawn);
-
-			player = playerSystem->GetPlayer(playerId);
-			player->SetStash(playerStashId);
-			player->SetController(new AICollectorController(collectorId, playerId, AICollectorControllerDesc()));
-		//}
+		player = playerSystem->GetPlayer(playerId);
+		player->SetStash(playerStashId);
+		player->SetController(new PlayerCollectorController(collectorId, playerId));
 	}
 
 
@@ -331,7 +310,7 @@ void Game::ProcessWindowEvent()
 	}
 }
 
-void Game::Step()
+void Game::Step(ActionState** actions)
 {
 	switch (this->m_GameState)
 	{
@@ -368,6 +347,16 @@ void Game::Step()
 		// else update game time ...
 		else if (this->m_GameContext.PlayTime > 0.0f)
 		{
+			PlayerSystem* playerSystem = ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerSystem>();
+			for (PlayerId p = 0; p < INT_SETTING(MAX_PLAYER); ++p)
+			{
+				Player* player = playerSystem->GetPlayer(p);
+				if (player != nullptr && actions[p] != nullptr)
+				{
+					player->GetController().SetFrameAction(actions[p]);
+				}
+			}
+
 			this->m_GameContext.PlayTime -= DELTA_TIME_STEP;
 		}
 		// else game time elapsed ...

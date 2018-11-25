@@ -120,4 +120,26 @@ struct GameContext
 
 }; // struct GameContext
 
+///-------------------------------------------------------------------------------------------------
+/// Struct:	ActionState
+///
+/// Summary:	An action state for a single player.
+///
+/// Author:	Tobias Stein
+///
+/// Date:	25/11/2018
+///-------------------------------------------------------------------------------------------------
+
+struct ActionState
+{
+
+	/// Summary:	The turn. Positive = turn left, Negative = turn right, 0.0f = stop moving.
+	float turn;
+
+
+	/// Summary:	The forward speed. (0.0f = stop)
+	float move;
+
+}; // struct ActionState
+
 #endif // __GAME_TYPES_H__

@@ -377,8 +377,8 @@ float32 b2WheelJoint::GetJointLinearSpeed() const
 	float32 wA = bA->m_angularVelocity;
 	float32 wB = bB->m_angularVelocity;
 
-	float32 speed = b2Dot(d, b2Cross(wA, axis)) + b2Dot(axis, vB + b2Cross(wB, rB) - vA - b2Cross(wA, rA));
-	return speed;
+	float32 move = b2Dot(d, b2Cross(wA, axis)) + b2Dot(axis, vB + b2Cross(wB, rB) - vA - b2Cross(wA, rA));
+	return move;
 }
 
 float32 b2WheelJoint::GetJointAngle() const
@@ -410,13 +410,13 @@ void b2WheelJoint::EnableMotor(bool flag)
 	}
 }
 
-void b2WheelJoint::SetMotorSpeed(float32 speed)
+void b2WheelJoint::SetMotorSpeed(float32 move)
 {
-	if (speed != m_motorSpeed)
+	if (move != m_motorSpeed)
 	{
 		m_bodyA->SetAwake(true);
 		m_bodyB->SetAwake(true);
-		m_motorSpeed = speed;
+		m_motorSpeed = move;
 	}
 }
 

@@ -15,7 +15,6 @@
 #include "Collector.h"
 #include "Bounty.h"
 
-#include "AICollectorController.h"
 #include "PlayerCollectorController.h"
 
 #include "MaterialComponent.h"
