@@ -30,7 +30,7 @@ void PlayerCollectorController::Update(float dt)
 	if (this->m_MoveForward == true)
 	{
 		// move collector at max speed
-		this->m_Pawn->MoveForward(COLLECTOR_MAX_MOVE_SPEED);
+		this->m_Pawn->MoveForward(FLOAT_SETTING(COLLECTOR_MAX_MOVE_SPEED));
 	}
 	else
 	{

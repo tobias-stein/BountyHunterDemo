@@ -43,7 +43,7 @@ void Game::InitializeSDL()
 }
 
 
-void Game::Initialize(int width, int height, bool fullscreen) 
+void Game::Initialize(int width, int height) 
 {
 	this->m_WindowWidth		= width;
 	this->m_WindowHeight	= height;
@@ -174,10 +174,10 @@ void Game::Restart()
 	// Create Player
 	//------------------------------------------
 
-	const float STEP = glm::two_pi<float>() / max(1.0f, (float)MAX_PLAYER);
+	const float STEP = glm::two_pi<float>() / max(1.0f, (float)INT_SETTING(MAX_PLAYER));
 	const float R = (WORLD_BOUND_MAX[0] - WORLD_BOUND_MIN[0]) * 0.5f;
 
-	for (size_t i = 0; i < MAX_PLAYER; ++i)
+	for (size_t i = 0; i < INT_SETTING(MAX_PLAYER); ++i)
 	{
 		const float angle = i * STEP;
 		const float xR = glm::cos(angle) * R;
@@ -194,21 +194,21 @@ void Game::Restart()
 
 		PlayerId playerId = INVALID_PLAYER_ID;
 		Player* player = nullptr;
-		if ((i == 0) && (HAS_HUMAN_PLAYER == true))
-		{
-			// create human player
-			playerId = playerSystem->AddNewPlayer(DEFAULT_PLAYER_NAME);
+		//if ((i == 0) && (HAS_HUMAN_PLAYER == true))
+		//{
+		//	// create human player
+		//	playerId = playerSystem->AddNewPlayer(DEFAULT_PLAYER_NAME);
 
-			// create stash and collector
-			GameObjectId playerStashId = worldSystem->AddGameObject<Stash>(glm::translate(glm::mat4(1.0f), Position(xR, yR, 1.0f)) * glm::scale(glm::vec3(2.5f)), playerId);
-			GameObjectId collectorId = worldSystem->AddGameObject<Collector>(initialTransform, collectorSpawn);
+		//	// create stash and collector
+		//	GameObjectId playerStashId = worldSystem->AddGameObject<Stash>(glm::translate(glm::mat4(1.0f), Position(xR, yR, 1.0f)) * glm::scale(glm::vec3(2.5f)), playerId);
+		//	GameObjectId collectorId = worldSystem->AddGameObject<Collector>(initialTransform, collectorSpawn);
 
-			player = playerSystem->GetPlayer(playerId);
-			player->SetStash(playerStashId);
-			player->SetController(new PlayerCollectorController(collectorId, playerId));
-		}
-		else
-		{
+		//	player = playerSystem->GetPlayer(playerId);
+		//	player->SetStash(playerStashId);
+		//	player->SetController(new PlayerCollectorController(collectorId, playerId));
+		//}
+		//else
+		//{
 			// create ai player
 			playerId = playerSystem->AddNewPlayer(("Player #" + std::to_string(i)).c_str());
 
@@ -219,7 +219,7 @@ void Game::Restart()
 			player = playerSystem->GetPlayer(playerId);
 			player->SetStash(playerStashId);
 			player->SetController(new AICollectorController(collectorId, playerId, AICollectorControllerDesc()));
-		}
+		//}
 	}
 
 
@@ -233,7 +233,7 @@ void Game::Restart()
 	BountySpawn* bountySpawn = (BountySpawn*)ECS::ECS_Engine->GetEntityManager()->GetEntity(bountySpawnId);
 
 	// spawn bounty
-	for (size_t i = 0; i < MAX_BOUNTY; ++i)
+	for (size_t i = 0; i < INT_SETTING(MAX_BOUNTY); ++i)
 	{
 		SpawnInfo spawnInfo = bountySpawn->GetSpawnInfo();
 		GameObjectId bountyId = worldSystem->AddGameObject<Bounty>(Transform(spawnInfo.m_SpawnPosition, glm::vec3(0.0f, 0.0f, 1.0f), spawnInfo.m_SpawnOrientation.z), bountySpawnId);
@@ -374,7 +374,7 @@ void Game::Step()
 		else
 		{
 			Player* winner = nullptr;
-			for (PlayerId p = 0; p < MAX_PLAYER; ++p)
+			for (PlayerId p = 0; p < INT_SETTING(MAX_PLAYER); ++p)
 			{
 				Player* player = ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerSystem>()->GetPlayer(p);
 				if (player != nullptr)

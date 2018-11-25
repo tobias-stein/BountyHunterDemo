@@ -24,7 +24,7 @@ CollisionComponent2D::~CollisionComponent2D()
 
 void CollisionComponent2D::Rescale(const glm::vec2& scale)
 {
-	auto S = scale * GLOBAL_SCALE;
+	auto S = scale * FLOAT_SETTING(GLOBAL_SCALE);
 
 	switch (this->shapeID)
 	{

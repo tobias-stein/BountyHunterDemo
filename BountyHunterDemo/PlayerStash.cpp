@@ -46,9 +46,9 @@ void Stash::OnDisable()
 
 void Stash::StashBounty(float bounty)
 {
-	if (this->m_StashedBounty + bounty > PLAYER_STASH_SIZE)
+	if (this->m_StashedBounty + bounty > FLOAT_SETTING(PLAYER_STASH_SIZE))
 	{
-		this->m_StashedBounty = PLAYER_STASH_SIZE;
+		this->m_StashedBounty = FLOAT_SETTING(PLAYER_STASH_SIZE);
 		ECS::ECS_Engine->SendEvent<StashFull>(this->GetEntityID());
 	}
 	else

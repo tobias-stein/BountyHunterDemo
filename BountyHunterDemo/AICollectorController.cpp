@@ -184,7 +184,7 @@ bool AICollectorController::AvoidObstacles()
 		speedRatio = dot;
 	}
 
-	this->m_Pawn->MoveForward(speedRatio * COLLECTOR_MAX_MOVE_SPEED);
+	this->m_Pawn->MoveForward(speedRatio * FLOAT_SETTING(COLLECTOR_MAX_MOVE_SPEED));
 
 	return true;
 }
@@ -215,7 +215,7 @@ float AICollectorController::MoveToTarget(const Position2D & target)
 		speedRatio = 1.0f - dot;
 	}
 
-	this->m_Pawn->MoveForward(speedRatio * COLLECTOR_MAX_MOVE_SPEED);
+	this->m_Pawn->MoveForward(speedRatio * FLOAT_SETTING(COLLECTOR_MAX_MOVE_SPEED));
 
 	return glm::distance2(target, Position2D(collectorTF->AsTransform()->GetPosition()));
 }
@@ -296,7 +296,7 @@ void AICollectorController::S_WANDER()
 	this->m_Pawn->StopTurning();
 
 	// move full speed ahead
-	this->m_Pawn->MoveForward(COLLECTOR_MAX_MOVE_SPEED);
+	this->m_Pawn->MoveForward(FLOAT_SETTING(COLLECTOR_MAX_MOVE_SPEED));
 
 	float steering = this->m_AICD.m_SteeringRatio_Wander * COLLECTOR_MAX_TURN_SPEED;
 
@@ -357,7 +357,7 @@ void AICollectorController::S_MOVE_TO_BOUNTY_LEAVE()
 void AICollectorController::S_BOUNTY_COLLECTED()
 {
 	// how full the player pocket is, in percentage [0.0 - 1.0]
-	float collectorPocketFillState = this->m_Pawn->GetCollectedBounty() / PLAYER_POCKET_SIZE;
+	float collectorPocketFillState = this->m_Pawn->GetCollectedBounty() / FLOAT_SETTING(PLAYER_POCKET_SIZE);
 
 	if (collectorPocketFillState >= this->m_AICD.m_StashBountyThreshold)
 	{

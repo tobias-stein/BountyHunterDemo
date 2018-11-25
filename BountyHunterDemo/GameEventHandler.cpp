@@ -128,7 +128,7 @@ void Game::OnCollisionBegin(const CollisionBeginEvent* event)
 void Game::OnStashFull(const StashFull* event)
 {
 	Stash* stash = (Stash*)ECS::ECS_Engine->GetEntityManager()->GetEntity(event->stashId);
-	if (stash->GetStashValue() >= PLAYER_STASH_SIZE)
+	if (stash->GetStashValue() >= FLOAT_SETTING(PLAYER_STASH_SIZE))
 	{
 		Player* player = ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerSystem>()->GetPlayer(stash->GetOwner());
 

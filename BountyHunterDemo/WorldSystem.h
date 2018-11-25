@@ -155,7 +155,7 @@ public:
 		assert(entityTransformComponent != nullptr && "Failure! Spawned entity has no TransformComponent!");
 
 		// apply global scale
-		transform.SetScale(transform.GetScale() * GLOBAL_SCALE);
+		transform.SetScale(transform.GetScale() * FLOAT_SETTING(GLOBAL_SCALE));
 
 		// set initial transform
 		entityTransformComponent->SetTransform(transform);

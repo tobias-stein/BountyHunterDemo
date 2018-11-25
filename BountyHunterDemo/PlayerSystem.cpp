@@ -8,7 +8,7 @@
 #include "ControllerSystem.h"
 
 PlayerSystem::PlayerSystem() :
-	m_Players(MAX_PLAYER, nullptr)
+	m_Players(INT_SETTING(MAX_PLAYER), nullptr)
 {}
 
 PlayerSystem::~PlayerSystem()
@@ -42,7 +42,7 @@ PlayerId PlayerSystem::AddNewPlayer(const char* playerName, const Controller& co
 
 void PlayerSystem::RemovePlayer(PlayerId playerId)
 {
-	assert(playerId < MAX_PLAYER && "Invalid player id!");
+	assert(playerId < INT_SETTING(MAX_PLAYER) && "Invalid player id!");
 
 	if (this->m_Players[playerId] != nullptr)
 	{

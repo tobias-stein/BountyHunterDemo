@@ -238,6 +238,7 @@ copy /Y "$(SolutionDir)ThirdParty\ECS\bin\x64\Release\EntityComponentSystem.dll"
     <ClCompile Include="ControllerSystem.cpp" />
     <ClCompile Include="DefaultMaterial.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameConfiguration.cpp" />
     <ClCompile Include="GameEventHandler.cpp" />
     <ClCompile Include="GLLineRenderer.cpp" />
     <ClCompile Include="GLShader.cpp" />

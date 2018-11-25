@@ -109,38 +109,15 @@ struct GameContext
 	/// Summary:	The freeze time.
 	float	FreezeTime;
 
-
 	/// Summary:	The play time.
 	float	PlayTime;
 
-	GameContext() :
-		FreezeTime(DEFAULT_FREEZE_TIME),
-		PlayTime(DEFAULT_PLAY_TIME)
-	{}
+	GameContext()	
+	{
+		this->FreezeTime = FLOAT_SETTING(DEFAULT_FREEZE_TIME);
+		this->PlayTime = FLOAT_SETTING(DEFAULT_PLAY_TIME);
+	}
 
 }; // struct GameContext
-
-
-struct IGameMenuOption
-{
-	virtual const char* GetName() const = 0;
-	virtual void		Execute() = 0;
-};
-
-template<class T>
-struct GameMenuOption : public IGameMenuOption
-{
-	const char*			OptionName;
-
-	GameMenuOption(const char* name = nullptr) :
-		OptionName(name)
-	{}
-
-	virtual const char* GetName() const override { return OptionName; }
-	virtual void Execute() override { ECS::ECS_Engine->SendEvent<T>(); }
-
-}; // struct GameMenuOption
-
-
 
 #endif // __GAME_TYPES_H__

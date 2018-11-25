@@ -21,7 +21,7 @@ Collector::Collector(GameObjectId spawnId) :
 
 	AddComponent<ShapeComponent>(shape);
 	this->m_ThisMaterial = AddComponent<MaterialComponent>(MaterialGenerator::CreateMaterial<DefaultMaterial>());
-	AddComponent<RespawnComponent>(COLLECTOR_RESPAWNTIME, spawnId, true);	
+	AddComponent<RespawnComponent>(FLOAT_SETTING(COLLECTOR_RESPAWNTIME), spawnId, true);
 	this->m_ThisTransform = GetComponent<TransformComponent>();
 	this->m_ThisRigidbody = AddComponent<RigidbodyComponent>();
 	AddComponent<CollisionComponent2D>(shape, this->m_ThisTransform->AsTransform()->GetScale(), CollisionCategory::Player_Category, CollisionMask::Player_Collision);
@@ -87,5 +87,5 @@ void Collector::ResetCollectedBounty()
 
 void Collector::CollectBounty(float bounty)
 {
-	this->m_CollectedBounty = glm::min<float>(this->m_CollectedBounty + bounty, PLAYER_POCKET_SIZE);
+	this->m_CollectedBounty = glm::min<float>(this->m_CollectedBounty + bounty, FLOAT_SETTING(PLAYER_POCKET_SIZE));
 }

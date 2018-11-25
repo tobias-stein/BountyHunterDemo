@@ -7,14 +7,38 @@
 #ifndef __GAME_CONFIG_H__
 #define __GAME_CONFIG_H__
 
+#include <string>
+//#include <variant> // since C++17
+#include <unordered_map>
 
-// TODO: implement load/save configuration mechanism
+
+#define NAME_AS_STRING(name) #name
+
+#define CHECK_DEFAULT_BOOL(setting) \
+	if (this->m_Settings.find(NAME_AS_STRING(setting)) == this->m_Settings.end()) this->m_Settings[NAME_AS_STRING(setting)].asBool = setting;
+
+#define CHECK_DEFAULT_INT(setting) \
+	if (this->m_Settings.find(NAME_AS_STRING(setting)) == this->m_Settings.end()) this->m_Settings[NAME_AS_STRING(setting)].asUint64 = setting;
+
+#define CHECK_DEFAULT_FLOAT(setting) \
+	if (this->m_Settings.find(NAME_AS_STRING(setting)) == this->m_Settings.end()) this->m_Settings[NAME_AS_STRING(setting)].asFloat = setting;
+
+
+#define BOOL_SETTING(setting) \
+	Settings::Get.asBool(NAME_AS_STRING(setting))
+
+#define INT_SETTING(setting) \
+	Settings::Get.asInt64(NAME_AS_STRING(setting))
+
+#define UINT_SETTING(setting) \
+	Settings::Get.asUint64(NAME_AS_STRING(setting))
+
+#define FLOAT_SETTING(setting) \
+	Settings::Get.asFloat(NAME_AS_STRING(setting))
+
 
 /// Summary:	The game title.
 static constexpr const char*			GAME_TITLE							{ "BountyHunter Demo" };
-
-/// Summary:	True if first player is human
-static constexpr bool					HAS_HUMAN_PLAYER					{ false };
 
 /// Summary:	The default player name.
 static constexpr const char*			DEFAULT_PLAYER_NAME					{ "BountyHunter" };
@@ -27,10 +51,6 @@ static constexpr unsigned int			GAME_WINDOW_WIDTH					{ 768 };
 
 /// Summary:	Height of the game window.
 static constexpr unsigned int			GAME_WINDOW_HEIGHT					{ 768 };
-
-/// Summary:	True if game should start in fullscreen mode.
-static constexpr bool					GAME_WINDOW_FULLSCREEN				{ false };
-
 
 
 // <<<< GAME WORLD SETTINGS >>>>
@@ -91,12 +111,12 @@ static constexpr float					TURN								{ 360.0f * RADIANS }; // 360 = 1 turn
 static constexpr float					COLLECTOR_MAX_TURN_SPEED			{ TURN };
 
 /// Summary:	The minimum and maximum bounty value.
-static constexpr float					MIN_BOUNTY_VALUE					{  5.0f };
-static constexpr float					MAX_BOUNTY_VALUE					{ 30.0f };
+static constexpr float					BOUNTY_MIN_VALUE					{  5.0f };
+static constexpr float					BOUNTY_MAX_VALUE					{ 30.0f };
 
 /// Summary:	The minimum and maximum bounty scale.
-static constexpr float					MIN_BOUNTY_SCALE					{ 1.0f };
-static constexpr float					MAX_BOUNTY_SCALE					{ 3.0f };
+static constexpr float					BOUNTY_MIN_SCALE					{ 1.0f };
+static constexpr float					BOUNTY_MAX_SCALE					{ 3.0f };
 
 /// Summary:	Bounty color RGBA
 static constexpr float					BOUNTY_COLOR_R						{ 1.0f };
@@ -137,5 +157,51 @@ static constexpr bool					ALLOW_CHEATS						{ true };
 
 /// Summary:	True to enable the debug drawing.
 static constexpr bool					DEBUG_DRAWING_ENABLED				{ true };
+
+
+class Settings
+{
+	static constexpr const char* SETTINGS_FILE { "D:\\Projects\\2018\\Cpp\\BountyHunter-AI\\x64\\Debug\\Game.config" };
+
+	union Variant
+	{
+		bool asBool;
+		int8_t asInt8;
+		int16_t asInt16;
+		int32_t asInt32;
+		int64_t asInt64;
+		uint8_t asUint8;
+		uint16_t asUint16;
+		uint32_t asUint32;
+		uint64_t asUint64;
+		float asFloat;
+	};
+
+	using TSettingKey = std::string;
+	using TSettingValue = Variant; //std::variant<bool, int8_t, int16_t, int32_t, int64_t, uint8_t, uint16_t, uint32_t, uint64_t, float, double>; // since C++17
+	using TSettings = std::unordered_map<TSettingKey, TSettingValue>;
+
+private:
+
+	TSettings m_Settings;
+
+	Settings();
+
+public:
+
+	static Settings Get;
+
+	const bool		asBool(const TSettingKey& name) { return m_Settings[name].asBool; }
+	const int8_t	asInt8(const TSettingKey& name) { return m_Settings[name].asInt8; }
+	const int16_t	asInt16(const TSettingKey& name) { return m_Settings[name].asInt16; }
+	const int32_t	asInt32(const TSettingKey& name) { return m_Settings[name].asInt32; }
+	const int64_t	asInt64(const TSettingKey& name) { return m_Settings[name].asInt64; }
+	const uint8_t	asUint8(const TSettingKey& name) { return m_Settings[name].asUint8; }
+	const uint16_t	asUint16(const TSettingKey& name) { return m_Settings[name].asUint16; }
+	const uint32_t	asUint32(const TSettingKey& name) { return m_Settings[name].asUint32; }
+	const uint64_t	asUint64(const TSettingKey& name) { return m_Settings[name].asUint64; }
+	const float		asFloat(const TSettingKey& name) { return m_Settings[name].asFloat; }
+};
+
 
 #endif // __GAME_CONFIG_H__

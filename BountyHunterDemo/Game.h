@@ -115,7 +115,7 @@ public:
 		The init method will conatin all code that will initialize the new game application
 		instance.
 	*/
-	void Initialize(int width, int height, bool fullscreen = false);
+	void Initialize(int width, int height);
 
 	///-------------------------------------------------------------------------------------------------
 	/// Fn:	void Game::Step();
@@ -165,8 +165,5 @@ public:
 	
 
 }; // class GameApp
-
-// global game instance, created in 'BountyHunterDemo.cpp'
-extern Game* g_GameInstance;
 
 #endif // __APPLICATION_H__
