@@ -102,7 +102,8 @@
       <Command>copy /Y "$(SolutionDir)ThirdParty\log4cplus-1.2.1-rc2\bin\x64\log4cplusD.dll" "$(TargetDir)log4cplusD.dll"
 copy /Y "$(SolutionDir)ThirdParty\glew-2.1.0\bin\x64\glew32.dll" "$(TargetDir)glew32.dll"
 copy /Y "$(SolutionDir)ThirdParty\SDL2-2.0.6-win32-x64\bin\x64\SDL2.dll" "$(TargetDir)SDL2.dll"
-copy /Y "$(SolutionDir)ThirdParty\ECS\bin\x64\Debug\EntityComponentSystem.dll" "$(TargetDir)EntityComponentSystem.dll"</Command>
+copy /Y "$(SolutionDir)ThirdParty\ECS\bin\x64\Debug\EntityComponentSystem.dll" "$(TargetDir)EntityComponentSystem.dll"
+copy /Y "$(SolutionDir)Game.config" "$(TargetDir)Game.config"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -389,6 +390,9 @@ copy /Y "$(SolutionDir)ThirdParty\ECS\bin\x64\Release\EntityComponentSystem.dll"
     <ClInclude Include="TriangleShape.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="WorldSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Game.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

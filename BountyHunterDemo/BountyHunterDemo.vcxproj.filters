@@ -771,4 +771,7 @@
       <Filter>Header Files\AI</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Game.config" />
+  </ItemGroup>
 </Project>
