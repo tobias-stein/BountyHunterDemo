@@ -21,6 +21,8 @@ RenderSystem::RenderSystem(SDL_Window* window) :
 	this->m_VertexBuffer = new VertexBuffer(GLOBAL_VERTEX_BUFFER_SIZE);
 	this->m_IndexBuffer = new IndexBuffer(GLOBAL_INDEX_BUFFER_SIZE);
 
+	this->m_FrameBuffer = new unsigned char[GAME_WINDOW_WIDTH * GAME_WINDOW_HEIGHT * 3];
+
 	RegisterEventCallbacks();
 }
 
@@ -52,6 +54,8 @@ RenderSystem::~RenderSystem()
 	this->m_IndexBuffer = nullptr;
 	delete this->m_IndexBuffer;
 
+	delete this->m_FrameBuffer;
+	this->m_FrameBuffer = nullptr;
 
 	TerminateOpenGL();
 }
@@ -84,7 +88,7 @@ void RenderSystem::InitializeOpenGL()
 	// set viewport
 	int width, height;
 	SDL_GetWindowSize(this->m_Window, &width, &height);
-	glViewport(0, 0, width, height);
+	glViewport(0, 0, width, -height);
 
 	// Clear framebuffer with black
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -194,6 +198,33 @@ void RenderSystem::PostUpdate(float dt)
 	// Swap Buffers and bring new rendered OpenGL content to the front
 	SDL_GL_SwapWindow(this->m_Window);
 
+	// read color buffer
+	{
+		glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
+		glReadPixels(0, 0, GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, this->m_FrameBuffer);
+
+		// FLIP IMAGE ON X-AXIS
+		for (int y = 0; y < GAME_WINDOW_HEIGHT / 2; ++y)
+		{
+			for (int x = 0; x < GAME_WINDOW_WIDTH; ++x)
+			{
+				int i = ((y * GAME_WINDOW_WIDTH) + x) * 3;
+				int j = (((GAME_WINDOW_HEIGHT - 1 - y) * GAME_WINDOW_WIDTH) + x) * 3;
+
+				unsigned char tmpR = this->m_FrameBuffer[i];
+				unsigned char tmpG = this->m_FrameBuffer[i + 1];
+				unsigned char tmpB = this->m_FrameBuffer[i + 2];
+
+				this->m_FrameBuffer[i] = this->m_FrameBuffer[j];
+				this->m_FrameBuffer[i + 1] = this->m_FrameBuffer[j + 1];
+				this->m_FrameBuffer[i + 2] = this->m_FrameBuffer[j + 2];
+
+				this->m_FrameBuffer[j] = tmpR;
+				this->m_FrameBuffer[j + 1] = tmpG;
+				this->m_FrameBuffer[j + 2] = tmpB;
+			}
+		}
+	}
 	// Check for errors
 	glGetLastError();
 }

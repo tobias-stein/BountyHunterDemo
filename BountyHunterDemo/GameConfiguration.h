@@ -150,6 +150,16 @@ static constexpr float					PLAYER_COLOR[MAX_PLAYER][4]			{
 																				{ 0.2f, 0.0f, 0.5f, 1.0f }  // PURPLE
 																			};
 
+/// Summary:	The magnitude scale for rewrding player death (base value is 1.0f).
+static constexpr float					REWARD_SCALE_PLAYER_DIED			{ -1.0f };
+
+
+/// Summary:	The reward scale of the amount of collected bounty.
+static constexpr float					REWARD_SCALE_BOUNTY_COLLECTED		{ 0.25f };
+
+/// Summary:	The reward scale of the amount of stashed bounty.
+static constexpr float					REWARD_SCALE_BOUNTY_STASHED			{ 1.0f };
+
 // <<<< DEBUG SETTINGS >>>>
 
 /// Summary:	Enable/Disable CheatSystem

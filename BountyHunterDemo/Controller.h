@@ -16,7 +16,7 @@ private:
 
 	IController*	m_ControllerImpl;
 
-	ActionState*	m_FrameAction;
+	PlayerAction*	m_FrameAction;
 
 public:
 
@@ -36,7 +36,7 @@ public:
 
 	GameObjectId GetPossessed();
 
-	inline void SetFrameAction(ActionState* action) { this->m_FrameAction = action; }
+	inline void SetFrameAction(PlayerAction* const action) { this->m_FrameAction = action; }
 
 	void Update();
 

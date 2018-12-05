@@ -64,9 +64,11 @@ void Collector::Turn(float degrees_sec)
 void Collector::ResetCollectedBounty()
 {
 	this->m_CollectedBounty = 0.0f;
+	ECS::ECS_Engine->SendEvent<PlayerPocketFillStateChange>(this->m_PlayerId, 0.0f);
 }
 
 void Collector::CollectBounty(float bounty)
 {
 	this->m_CollectedBounty = glm::min<float>(this->m_CollectedBounty + bounty, FLOAT_SETTING(PLAYER_POCKET_SIZE));
+	ECS::ECS_Engine->SendEvent<PlayerPocketFillStateChange>(this->m_PlayerId, this->m_CollectedBounty);
 }

@@ -143,23 +143,6 @@ struct KeyPressedEvent : public ECS::Event::Event<KeyPressedEvent>
 
 
 ///-------------------------------------------------------------------------------------------------
-/// Summary:	General video state events.
-/// Author:	Tobias Stein
-///
-/// Date:	4/10/2017
-///-------------------------------------------------------------------------------------------------
-
-struct ToggleFullscreenEvent : public ECS::Event::Event<ToggleFullscreenEvent>
-{};
-
-struct EnterFullscreenModeEvent : public ECS::Event::Event<EnterFullscreenModeEvent>
-{};
-
-struct EnterWindowModeEvent : public ECS::Event::Event<EnterWindowModeEvent>
-{};
-
-
-///-------------------------------------------------------------------------------------------------
 /// Summary:	Game Object events.
 /// Author:	Tobias Stein
 ///
@@ -279,12 +262,45 @@ struct PlayerLeft : public ECS::Event::Event<PlayerLeft>
 	{}
 };
 
+struct PlayerDied : public ECS::Event::Event<PlayerDied>
+{
+	PlayerId playerID;
+
+	PlayerDied(PlayerId id) : playerID(id)
+	{}
+};
+
+struct PlayerSpawned : public ECS::Event::Event<PlayerSpawned>
+{
+	PlayerId playerID;
+
+	PlayerSpawned(PlayerId id) : playerID(id)
+	{}
+};
 
 struct StashFull : public ECS::Event::Event<StashFull>
 {
 	GameObjectId stashId;
 
 	StashFull(GameObjectId id) : stashId(id)
+	{}
+};
+
+struct PlayerPocketFillStateChange : public ECS::Event::Event<PlayerPocketFillStateChange>
+{
+	PlayerId playerID;
+	float fillState;
+
+	PlayerPocketFillStateChange(PlayerId id, float fill) : playerID(id), fillState(fill)
+	{}
+};
+
+struct PlayerStashFillStateChange : public ECS::Event::Event<PlayerStashFillStateChange>
+{
+	PlayerId playerID;
+	float fillState;
+
+	PlayerStashFillStateChange(PlayerId id, float fill) : playerID(id), fillState(fill)
 	{}
 };
 

@@ -29,6 +29,7 @@
 #include "RespawnSystem.h"
 #include "ControllerSystem.h"
 #include "PhysicsSystem.h"
+#include "PlayerStateSystem.h"
 
 // game entities
 #include "TabletopCamera.h"
@@ -113,7 +114,8 @@ public:
 	///-------------------------------------------------------------------------------------------------
 	/// Fn:	void Game::Step(ActionState** actions);
 	///
-	/// Summary:	Advances the game state by one frame. 
+	/// Summary:	Advances the game state by one frame. The step function takes in an array of actions
+	/// one for each player. 
 	///
 	/// Author:	Tobias Stein
 	///
@@ -121,9 +123,11 @@ public:
 	///
 	/// Parameters:
 	/// actions - 	[in] Actions per collector.
+	/// 
+	/// Returns:	An array of state, one for each player.
 	///-------------------------------------------------------------------------------------------------
 
-	void Step(ActionState** actions);
+	const PlayerState* Step(PlayerAction** const actions);
 
 	///-------------------------------------------------------------------------------------------------
 	/// Fn:	void Game::Restart();

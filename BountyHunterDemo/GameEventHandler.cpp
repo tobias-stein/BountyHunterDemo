@@ -30,6 +30,10 @@ void Game::OnCollisionBegin(const CollisionBeginEvent* event)
 				// reset collected bounty to zero
 				((Collector*)objectA)->ResetCollectedBounty();
 				((Collector*)objectB)->ResetCollectedBounty();
+
+				// broadcast player died event
+				ECS::ECS_Engine->SendEvent<PlayerDied>(((Collector*)objectA)->GetPlayer());
+				ECS::ECS_Engine->SendEvent<PlayerDied>(((Collector*)objectB)->GetPlayer());
 			}
 		}
 	}

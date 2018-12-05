@@ -256,6 +256,7 @@ copy /Y "$(SolutionDir)ThirdParty\ECS\bin\x64\Release\EntityComponentSystem.dll"
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCollectorController.cpp" />
     <ClCompile Include="PlayerSpawn.cpp" />
+    <ClCompile Include="PlayerStateSystem.cpp" />
     <ClCompile Include="PlayerSystem.cpp" />
     <ClCompile Include="PointSpawn.cpp" />
     <ClCompile Include="RegionSpawn.cpp" />
@@ -358,6 +359,7 @@ copy /Y "$(SolutionDir)ThirdParty\ECS\bin\x64\Release\EntityComponentSystem.dll"
     <ClInclude Include="PlayerCollectorController.h" />
     <ClInclude Include="PlayerController.h" />
     <ClInclude Include="PlayerSpawn.h" />
+    <ClInclude Include="PlayerStateSystem.h" />
     <ClInclude Include="PlayerSystem.h" />
     <ClInclude Include="PointSpawn.h" />
     <ClInclude Include="QuadShape.h" />

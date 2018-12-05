@@ -18,7 +18,7 @@ public:
 	virtual ~PlayerCollectorController();
 
 	// Inherited via PlayerController
-	virtual void Update(const ActionState* action) override;
+	virtual void Update(const PlayerAction* action) override;
 
 }; // class PlayerCollectorController
 

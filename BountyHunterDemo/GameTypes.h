@@ -125,7 +125,7 @@ struct GameContext
 }; // struct GameContext
 
 ///-------------------------------------------------------------------------------------------------
-/// Struct:	ActionState
+/// Struct:	PlayerAction
 ///
 /// Summary:	An action state for a single player.
 ///
@@ -134,7 +134,7 @@ struct GameContext
 /// Date:	25/11/2018
 ///-------------------------------------------------------------------------------------------------
 
-struct ActionState
+struct PlayerAction
 {
 	/// Summary:	The forward speed. (0.0f = stop)
 	float move;
@@ -143,5 +143,40 @@ struct ActionState
 	float turn;
 
 }; // struct ActionState
+
+///-------------------------------------------------------------------------------------------------
+/// Struct:	PlayerState
+///
+/// Summary:	The state description of the current game.
+///
+/// Author:	Tobias Stein
+///
+/// Date:	4/12/2018
+///-------------------------------------------------------------------------------------------------
+
+struct PlayerState
+{
+	/// Summary:	The current rendered view of the game state.
+	const unsigned char*	image;
+
+	/// Summary:	The player position x/y coordinate.
+	float					playerPositionX;
+	float					playerPositionY;
+
+	/// Summary:	The player rotation in degrees.
+	float					playerRotation;
+
+	/// Summary:	Player pocket fill state in absolute units.
+	float					playerPocketLoad;
+
+	/// Summary:	Player stash fill state in absolute units.
+	float					playerStashLoad;
+
+	/// Summary:	If player is dead or not.
+	bool					playerDead;
+
+	/// Summary:	The reward this player received this frame.
+	float					playerReward;
+};
 
 #endif // __GAME_TYPES_H__

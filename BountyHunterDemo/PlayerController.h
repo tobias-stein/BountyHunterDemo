@@ -10,7 +10,7 @@
 #include "IController.h"
 
 // forawrd declaration
-struct ActionState;
+struct PlayerAction;
 
 template<class T>
 class PlayerController : public IController, ECS::Event::IEventListener
@@ -60,7 +60,7 @@ public:
 		return INVALID_GAMEOBJECT_ID;
 	}
 
-	virtual void Update(const ActionState* action) = 0;
+	virtual void Update(const PlayerAction* action) = 0;
 
 }; // class PlayerController
 

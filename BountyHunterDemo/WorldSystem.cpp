@@ -6,6 +6,7 @@
 
 #include "WorldSystem.h"
 #include "PhysicsSystem.h"
+#include "Collector.h"
 
 WorldSystem::WorldSystem() :
 	m_Box2DWorld(b2Vec2(WORLD_GRAVITY[0], WORLD_GRAVITY[1])),
@@ -42,6 +43,12 @@ void WorldSystem::PreUpdate(float dt)
 			entity->SetActive(true);
 
 			ECS::ECS_Engine->SendEvent<GameObjectSpawned>(this->m_SpawnQueue[i].m_GameObjectID, *entityTransformComponent->AsTransform());
+
+			// check if this is a player
+			if (entity->GetStaticEntityTypeID() == Collector::STATIC_ENTITY_TYPE_ID)
+			{
+				ECS::ECS_Engine->SendEvent<PlayerSpawned>(((Collector*)entity)->GetPlayer());
+			}
 		}
 	}
 

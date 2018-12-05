@@ -55,4 +55,6 @@ void Stash::StashBounty(float bounty)
 	{
 		this->m_StashedBounty += bounty;
 	}
+
+	ECS::ECS_Engine->SendEvent<PlayerStashFillStateChange>(this->GetOwner(), this->m_StashedBounty);
 }

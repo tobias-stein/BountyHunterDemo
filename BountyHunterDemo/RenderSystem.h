@@ -103,6 +103,8 @@ private:
 	bool				m_DrawDebug;
 	GLLineRenderer*		m_DebugLineRenderer;
 
+	unsigned char*		m_FrameBuffer;
+
 private:
 
 	void InitializeOpenGL();
@@ -151,6 +153,20 @@ public:
 	virtual void PreUpdate(float dt) override;
 	virtual void Update(float dt) override;
 	virtual void PostUpdate(float dt) override;
+
+	///-------------------------------------------------------------------------------------------------
+	/// Fn:	inline const unsigned char* RenderSystem::GetCurrentFrameBuffer() const
+	///
+	/// Summary:	Gets current frame buffer.
+	///
+	/// Author:	Tobias Stein
+	///
+	/// Date:	5/12/2018
+	///
+	/// Returns:	Null if it fails, else the current frame buffer.
+	///-------------------------------------------------------------------------------------------------
+
+	inline const unsigned char* GetCurrentFrameBuffer() const { return this->m_FrameBuffer; }
 
 	///-------------------------------------------------------------------------------------------------
 	/// Fn:

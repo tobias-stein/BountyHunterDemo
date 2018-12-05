@@ -84,6 +84,9 @@ void Game::Initialize(int width, int height)
 		// PlayerSystem
 		PlayerSystem*		PlS = ECS::ECS_Engine->GetSystemManager()->AddSystem<PlayerSystem>();
 
+		// PlayerStateSystem
+		PlayerStateSystem*	PSS = ECS::ECS_Engine->GetSystemManager()->AddSystem<PlayerStateSystem>();
+
 		// Change InputSystem's priority to high
 		ECS::ECS_Engine->GetSystemManager()->SetSystemPriority<InputSystem>(ECS::HIGH_SYSTEM_PRIORITY);
 
@@ -125,6 +128,8 @@ void Game::Restart()
 
 	ECS::ECS_Engine->GetSystemManager()->GetSystem<RespawnSystem>()->Reset();
 	ECS::ECS_Engine->GetSystemManager()->GetSystem<LifetimeSystem>()->Reset();
+
+	ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerStateSystem>()->Reset();
 
 	// reset game context
 	this->m_GameContext = GameContext();
@@ -318,17 +323,17 @@ void Game::ProcessWindowEvent()
 	}
 }
 
-void Game::Step(ActionState** actions)
+const PlayerState* Game::Step(PlayerAction** const actions)
 {
 	switch (this->m_GameState)
 	{
 		case GameState::NOT_INITIALIZED:
 			// GAME MUST BE INITIALIZED!
-			return;
+			return nullptr;
 
 		case GameState::GAMEOVER:
 			// GAME NEEDS RESTART!
-			return;
+			return nullptr;
 
 		case GameState::RESTARTED:
 			this->m_GameState = GameState::RUNNING;
@@ -336,14 +341,13 @@ void Game::Step(ActionState** actions)
 
 		case GameState::TERMINATED:
 			// ALREADY TERMINATED!
-			return;
-	}
-		
+			return nullptr;
+	}	
 
 	// Process game application window events
 	ProcessWindowEvent();
 	if (this->m_Window == nullptr)
-		return;
+		return nullptr;
 
 	// Update game logic
 	{
@@ -402,4 +406,7 @@ void Game::Step(ActionState** actions)
 
 	// Update the ECS
 	ECS::ECS_Engine->Update(DELTA_TIME_STEP);
+
+	// return player states
+	return ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerStateSystem>()->GetPlayerStates();
 }

@@ -35,7 +35,7 @@ struct b2TOIInput
 // Output parameters for b2TimeOfImpact.
 struct b2TOIOutput
 {
-	enum State
+	enum PlayerState
 	{
 		e_unknown,
 		e_failed,
@@ -44,7 +44,7 @@ struct b2TOIOutput
 		e_separated
 	};
 
-	State state;
+	PlayerState state;
 	float32 t;
 };
 

@@ -17,7 +17,7 @@ PlayerCollectorController::~PlayerCollectorController()
 }
 
 
-void PlayerCollectorController::Update(const ActionState* action)
+void PlayerCollectorController::Update(const PlayerAction* action)
 {
 	if (this->m_Pawn->IsActive() == false || action == nullptr)
 		return;
