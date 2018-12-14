@@ -236,16 +236,18 @@ PlayerId Game::AddPlayer()
 	// increment player count
 	this->m_GameContext.NumPlayer++;
 
-	return PlayerId();
+	return playerId;
 }
 
-void Game::GameOver()
+void Game::GameOver(PlayerId winnerId)
 {
 	// change system manager active work state
 	ECS::ECS_Engine->GetSystemManager()->SetSystemWorkState(this->m_NotIngame_SystemWSM);
 
 	UnregisterEventCallback(&Game::OnCollisionBegin);
 	UnregisterEventCallback(&Game::OnStashFull);
+
+	this->m_GameContext.WinnerId = winnerId;
 }
 
 void Game::Terminate()
@@ -323,17 +325,20 @@ void Game::ProcessWindowEvent()
 	}
 }
 
-const PlayerState* Game::Step(PlayerAction** const actions)
+int Game::Step(PlayerAction** const in_actions, PlayerState* out_states, void* out_framebuffer)
 {
+	if (this->m_GameContext.WinnerId > 0)
+		return this->m_GameContext.WinnerId;
+
 	switch (this->m_GameState)
 	{
 		case GameState::NOT_INITIALIZED:
 			// GAME MUST BE INITIALIZED!
-			return nullptr;
+			return -1;
 
 		case GameState::GAMEOVER:
 			// GAME NEEDS RESTART!
-			return nullptr;
+			return -1;
 
 		case GameState::RESTARTED:
 			this->m_GameState = GameState::RUNNING;
@@ -341,13 +346,13 @@ const PlayerState* Game::Step(PlayerAction** const actions)
 
 		case GameState::TERMINATED:
 			// ALREADY TERMINATED!
-			return nullptr;
+			return -1;
 	}	
 
 	// Process game application window events
 	ProcessWindowEvent();
 	if (this->m_Window == nullptr)
-		return nullptr;
+		return -1;
 
 	// Update game logic
 	{
@@ -360,7 +365,7 @@ const PlayerState* Game::Step(PlayerAction** const actions)
 		else if (this->m_GameContext.PlayTime > 0.0f)
 		{
 			// set player actions, iff any
-			if (actions != nullptr)
+			if (in_actions != nullptr)
 			{
 				PlayerSystem* playerSystem = ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerSystem>();
 				for (PlayerId p = 0; p < INT_SETTING(MAX_PLAYER); ++p)
@@ -368,7 +373,7 @@ const PlayerState* Game::Step(PlayerAction** const actions)
 					Player* player = playerSystem->GetPlayer(p);
 					if (player != nullptr)
 					{
-						player->GetController().SetFrameAction(actions[p]);
+						player->GetController().SetFrameAction(in_actions[p]);
 					}
 				}
 			}
@@ -379,6 +384,7 @@ const PlayerState* Game::Step(PlayerAction** const actions)
 		else
 		{
 			Player* winner = nullptr;
+			Stash* winnerStash = nullptr;
 			for (PlayerId p = 0; p < INT_SETTING(MAX_PLAYER); ++p)
 			{
 				Player* player = ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerSystem>()->GetPlayer(p);
@@ -391,7 +397,7 @@ const PlayerState* Game::Step(PlayerAction** const actions)
 					}
 
 					Stash* playerStash = (Stash*)ECS::ECS_Engine->GetEntityManager()->GetEntity(player->GetStash());
-					Stash* winnerStash = (Stash*)ECS::ECS_Engine->GetEntityManager()->GetEntity(winner->GetStash());
+					winnerStash = (Stash*)ECS::ECS_Engine->GetEntityManager()->GetEntity(winner->GetStash());
 
 					if (playerStash->GetStashValue() > winnerStash->GetStashValue())
 					{
@@ -400,13 +406,32 @@ const PlayerState* Game::Step(PlayerAction** const actions)
 				}
 
 			}
-			this->GameOver();
+			
+			// if winner has empty stash, all player have. Choose random winner.
+			this->GameOver((glm::abs(winnerStash->GetStashValue()) < glm::epsilon<float>()) ? glm::linearRand<PlayerId>(0, ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerSystem>()->GetActivePlayerCount()) : winner->GetPlayerId());
 		}
 	}
 
 	// Update the ECS
 	ECS::ECS_Engine->Update(DELTA_TIME_STEP);
 
-	// return player states
-	return ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerStateSystem>()->GetPlayerStates();
+	// copy states
+	if (out_states != nullptr)
+	{
+		const PlayerState* states = ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerStateSystem>()->GetPlayerStates();
+
+		for (PlayerId pID = 0; pID < INT_SETTING(MAX_PLAYER); ++pID)
+		{
+			out_states[pID] = states[pID];
+		}
+	}
+
+	// copy framebuffer
+	if (out_framebuffer != nullptr)
+	{
+		std::memcpy(out_framebuffer, (const void*)ECS::ECS_Engine->GetSystemManager()->GetSystem<RenderSystem>()->GetCurrentFrameBuffer(), size_t(GAME_WINDOW_WIDTH * GAME_WINDOW_HEIGHT * 3));
+	}
+
+	return -1;
 }
+

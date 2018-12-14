@@ -414,9 +414,6 @@
     <ClCompile Include="CollectorAvoider.cpp">
       <Filter>Source Files\Components</Filter>
     </ClCompile>
-    <ClCompile Include="BountyHunterAI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameConfiguration.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -426,6 +423,7 @@
     <ClCompile Include="PlayerStateSystem.cpp">
       <Filter>Source Files\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="API_EXPORT_C.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="InputSystem.h">
@@ -761,6 +759,7 @@
     <ClInclude Include="PlayerStateSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="API_EXPORT_C.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game.config" />

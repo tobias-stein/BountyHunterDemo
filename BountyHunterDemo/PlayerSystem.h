@@ -18,6 +18,7 @@ class PlayerSystem : public ECS::System<PlayerSystem>
 private:
 
 	PlayerList m_Players;
+	size_t m_numPlayer;
 
 public:
 
@@ -88,6 +89,20 @@ public:
 		assert(playerId < MAX_PLAYER && "Invalid player id!");
 		return this->m_Players[playerId]; 
 	}
+
+	///-------------------------------------------------------------------------------------------------
+	/// Fn:	inline size_t PlayerSystem::GetActivePlayerCount() const
+	///
+	/// Summary:	Gets active player count.
+	///
+	/// Author:	Tobias Stein
+	///
+	/// Date:	14/12/2018
+	///
+	/// Returns:	The active player count.
+	///-------------------------------------------------------------------------------------------------
+
+	inline size_t GetActivePlayerCount() const { return this->m_numPlayer; }
 
 }; // class PlayerSystem
 

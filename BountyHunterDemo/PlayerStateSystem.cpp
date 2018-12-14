@@ -80,8 +80,7 @@ void PlayerStateSystem::Reset()
 
 void PlayerStateSystem::OnPlayerJoined(const PlayerJoined* event)
 {
-	this->m_PlayerStates[event->playerID].image = ECS::ECS_Engine->GetSystemManager()->GetSystem<RenderSystem>()->GetCurrentFrameBuffer();
-	this->m_PlayerStates[event->playerID].playerDead = true;
+	this->m_PlayerStates[event->playerID].playerDead = false;
 	this->m_PlayerStates[event->playerID].playerPositionX = 0.0f;
 	this->m_PlayerStates[event->playerID].playerPositionY = 0.0f;
 	this->m_PlayerStates[event->playerID].playerRotation = 0.0f;

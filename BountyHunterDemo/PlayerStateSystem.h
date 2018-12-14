@@ -45,7 +45,7 @@ public:
 
 	void Reset();
 
-	inline const PlayerState* GetPlayerStates() { return (const PlayerState*)&this->m_PlayerStates[0]; }
+	inline const PlayerState* GetPlayerStates() { return (const PlayerState*)&this->m_PlayerStates; }
 
 }; // class PlayerStateSystem
 

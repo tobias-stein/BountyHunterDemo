@@ -24,7 +24,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>BountyHunterDemo</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
-    <ProjectName>BountyHunter-AI</ProjectName>
+    <ProjectName>BountyHunterAI</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -41,13 +41,13 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -88,7 +88,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;BOUNTY_AI_API_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\ECS\include;$(SolutionDir)ThirdParty\glm-0.9.8.5\glm;$(SolutionDir)ThirdParty\log4cplus-1.2.1-rc2\include;$(SolutionDir)ThirdParty\glew-2.1.0\include;$(SolutionDir)ThirdParty\SDL2-2.0.6-win32-x64\include;$(SolutionDir)ThirdParty\Box2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -155,7 +155,7 @@ copy /Y "$(SolutionDir)ThirdParty\ECS\bin\x86\Release\EntityComponentSystem.dll"
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;BOUNTY_AI_API_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\ECS\include;$(SolutionDir)ThirdParty\glm-0.9.8.5\glm;$(SolutionDir)ThirdParty\log4cplus-1.2.1-rc2\include;$(SolutionDir)ThirdParty\glew-2.1.0\include;$(SolutionDir)ThirdParty\SDL2-2.0.6-win32-x64\include;$(SolutionDir)ThirdParty\Box2D;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -225,8 +225,8 @@ copy /Y "$(SolutionDir)ThirdParty\ECS\bin\x64\Release\EntityComponentSystem.dll"
     <ClCompile Include="..\ThirdParty\Box2D\Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
     <ClCompile Include="..\ThirdParty\Box2D\Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
     <ClCompile Include="..\ThirdParty\Box2D\Box2D\Rope\b2Rope.cpp" />
+    <ClCompile Include="API_EXPORT_C.cpp" />
     <ClCompile Include="Bounty.cpp" />
-    <ClCompile Include="BountyHunterAI.cpp" />
     <ClCompile Include="BountyRadar.cpp" />
     <ClCompile Include="BountySpawn.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -324,6 +324,7 @@ copy /Y "$(SolutionDir)ThirdParty\ECS\bin\x64\Release\EntityComponentSystem.dll"
     <ClInclude Include="..\ThirdParty\Box2D\Box2D\Dynamics\Joints\b2WheelJoint.h" />
     <ClInclude Include="..\ThirdParty\Box2D\Box2D\Rope\b2Rope.h" />
     <ClInclude Include="AICollectorControllerDesc.h" />
+    <ClInclude Include="API_EXPORT_C.h" />
     <ClInclude Include="Bounds.h" />
     <ClInclude Include="Bounty.h" />
     <ClInclude Include="BountyCollectStrategy.h" />

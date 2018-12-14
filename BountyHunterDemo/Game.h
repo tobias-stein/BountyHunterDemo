@@ -43,7 +43,6 @@
 // player controller
 #include "PlayerCollectorController.h"
 
-
 class Game : protected ECS::Event::IEventListener {
 
 public:
@@ -112,22 +111,28 @@ public:
 	void Initialize(int width, int height);
 
 	///-------------------------------------------------------------------------------------------------
-	/// Fn:	void Game::Step(ActionState** actions);
+	/// Fn:
+	/// bool Game::Step(PlayerAction** const in_actions, PlayerState* out_states,
+	/// void* out_framebuffer);
 	///
-	/// Summary:	Advances the game state by one frame. The step function takes in an array of actions
-	/// one for each player. 
+	/// Summary:
+	/// Advances the game state by one frame. The step function takes in an array of actions one for
+	/// each player.
 	///
-	/// Author:	Tobias Stein
+	/// Author:	Tobias Stein.
 	///
-	/// Date:	25/11/2018
+	/// Date:	25/11/2018.
 	///
 	/// Parameters:
-	/// actions - 	[in] Actions per collector.
-	/// 
-	/// Returns:	An array of state, one for each player.
+	/// in_actions - 	  	[in] Actions per collector.
+	/// out_states - 	  	[in,out] If non-null, list of states of the outs.
+	/// out_framebuffer - 	[in,out] If non-null, the out framebuffer.
+	///
+	/// Returns:	Returns non-negative value, if game is over. Value indicates winner id.
+	///
 	///-------------------------------------------------------------------------------------------------
 
-	const PlayerState* Step(PlayerAction** const actions);
+	int Step(PlayerAction** const in_actions, PlayerState* out_states, void* out_framebuffer);
 
 	///-------------------------------------------------------------------------------------------------
 	/// Fn:	void Game::Restart();
@@ -156,16 +161,19 @@ public:
 	PlayerId AddPlayer();
 
 	///-------------------------------------------------------------------------------------------------
-	/// Fn:	void Game::GameOver();
+	/// Fn:	void Game::GameOver(PlayerId winnerId);
 	///
 	/// Summary:	Game over.
 	///
-	/// Author:	Tobias Stein
+	/// Author:	Tobias Stein.
 	///
-	/// Date:	19/11/2018
+	/// Date:	19/11/2018.
+	///
+	/// Parameters:
+	/// winnerId - 	Identifier for the winner.
 	///-------------------------------------------------------------------------------------------------
 
-	void GameOver();
+	void GameOver(PlayerId winnerId);
 
 	inline SDL_Window*	GetWindow()				const { return this->m_Window; }
 
@@ -176,7 +184,6 @@ public:
 	inline bool			IsGameOver()			const { return (this->m_GameState == GameState::GAMEOVER); }
 	inline bool			IsTerminated()			const { return (this->m_GameState == GameState::TERMINATED); }
 
-	
 
 }; // class GameApp
 

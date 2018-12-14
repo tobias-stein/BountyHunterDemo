@@ -23,6 +23,6 @@ void PlayerCollectorController::Update(const PlayerAction* action)
 		return;
 
 	// forward action to pawn
-	this->m_Pawn->Move(action->move);
-	this->m_Pawn->Turn(action->turn);
+	this->m_Pawn->Move(glm::clamp(action->move,  0.0f, 1.0f));
+	this->m_Pawn->Turn(glm::clamp(action->turn, -1.0f, 1.0f));
 }

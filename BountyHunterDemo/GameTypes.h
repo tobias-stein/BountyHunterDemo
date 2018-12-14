@@ -113,12 +113,16 @@ struct GameContext
 	float	PlayTime;
 
 
+	/// Summary:	Not -1, if game is over. This will contain the winner id
+	int		WinnerId;
+
 	/// Summary:	Number of players.
 	int		NumPlayer;
 
 	GameContext() : 
 		FreezeTime(FLOAT_SETTING(DEFAULT_FREEZE_TIME)),
 		PlayTime(FLOAT_SETTING(DEFAULT_PLAY_TIME)),
+		WinnerId(-1),
 		NumPlayer(0)
 	{}
 
@@ -136,10 +140,10 @@ struct GameContext
 
 struct PlayerAction
 {
-	/// Summary:	The forward speed. (0.0f = stop)
+	/// Summary:	The forward speed. (0.0f = stop; 1.0f = full speed)
 	float move;
 
-	/// Summary:	The turn. Positive = turn left, Negative = turn right, 0.0f = stop moving.
+	/// Summary:	The turn. Positive = turn left (1.0f max turn speed left), Negative = turn right (-1.0f max turn speed left), 0.0f = stop moving.
 	float turn;
 
 }; // struct ActionState
@@ -156,9 +160,6 @@ struct PlayerAction
 
 struct PlayerState
 {
-	/// Summary:	The current rendered view of the game state.
-	const unsigned char*	image;
-
 	/// Summary:	The player position x/y coordinate.
 	float					playerPositionX;
 	float					playerPositionY;

@@ -52,13 +52,13 @@ void Collector::OnDisable()
 
 void Collector::Move(float move)
 {
-	glm::vec2 vel = this->m_ThisTransform->AsTransform()->GetUp() * glm::clamp(move, 0.0f, this->m_MaxMoveSpeed);
+	glm::vec2 vel = this->m_ThisTransform->AsTransform()->GetUp() * (move * this->m_MaxMoveSpeed);
 	this->m_ThisRigidbody->m_Box2DBody->SetLinearVelocity(b2Vec2(vel.x, vel.y));
 }
 
 void Collector::Turn(float degrees_sec)
 {
-	this->m_ThisRigidbody->m_Box2DBody->SetAngularVelocity(glm::clamp(degrees_sec, -this->m_MaxMoveSpeed, this->m_MaxMoveSpeed));
+	this->m_ThisRigidbody->m_Box2DBody->SetAngularVelocity(degrees_sec * this->m_MaxMoveSpeed);
 }
 
 void Collector::ResetCollectedBounty()

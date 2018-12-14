@@ -135,7 +135,6 @@ void Game::OnStashFull(const StashFull* event)
 	if (stash->GetStashValue() >= FLOAT_SETTING(PLAYER_STASH_SIZE))
 	{
 		Player* player = ECS::ECS_Engine->GetSystemManager()->GetSystem<PlayerSystem>()->GetPlayer(stash->GetOwner());
-
-		this->GameOver();
+		this->GameOver(player->GetPlayerId());
 	}
 }
