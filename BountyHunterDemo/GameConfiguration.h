@@ -171,7 +171,7 @@ static constexpr bool					DEBUG_DRAWING_ENABLED				{ true };
 
 class Settings
 {
-	static constexpr const char* SETTINGS_FILE { "D:\\Projects\\2018\\Cpp\\BountyHunter-AI\\x64\\Debug\\Game.config" };
+	static constexpr const char* SETTINGS_FILE { "Game.config" };
 
 	union Variant
 	{
