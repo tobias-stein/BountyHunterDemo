@@ -30,7 +30,7 @@ void Game::InitializeSDL()
 	SDL_Init(SDL_INIT_VIDEO);
 
 	// Create a new window for OpenGL rendering prupose
-	this->m_Window = SDL_CreateWindow(this->m_GameTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->m_WindowWidth, this->m_WindowHeight, SDL_WINDOW_OPENGL);
+	this->m_Window = SDL_CreateWindow(this->m_GameTitle, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->m_WindowWidth, this->m_WindowHeight, SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN);
 	if (m_Window == 0) {
 
 		SDL_Log("Unable to create game application window! %s", SDL_GetError());

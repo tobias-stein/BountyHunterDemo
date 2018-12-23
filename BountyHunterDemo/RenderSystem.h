@@ -103,7 +103,7 @@ private:
 	bool				m_DrawDebug;
 	GLLineRenderer*		m_DebugLineRenderer;
 
-	unsigned char*		m_FrameBuffer;
+	void*				m_FrameBuffer;
 
 private:
 
@@ -166,7 +166,7 @@ public:
 	/// Returns:	Null if it fails, else the current frame buffer.
 	///-------------------------------------------------------------------------------------------------
 
-	inline const unsigned char* GetCurrentFrameBuffer() const { return this->m_FrameBuffer; }
+	inline const void* GetCurrentFrameBuffer() const { return this->m_FrameBuffer; }
 
 	///-------------------------------------------------------------------------------------------------
 	/// Fn:

@@ -66,19 +66,18 @@ void RenderSystem::InitializeOpenGL()
 	this->m_Context = SDL_GL_CreateContext(this->m_Window);
 	assert(this->m_Context != 0 && "Failed to create OpenGL context!");
 
-
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
 	// OpenGL verison 4.5 (released 2014)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
+	
 
 	// Enable double buffering
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	//Use Vsync
 	SDL_GL_SetSwapInterval(1);
-
 
 	// init glew 
 	glewExperimental = GL_TRUE;
@@ -195,14 +194,18 @@ void RenderSystem::Update(float dt)
 
 void RenderSystem::PostUpdate(float dt)
 {
-	// Swap Buffers and bring new rendered OpenGL content to the front
-	SDL_GL_SwapWindow(this->m_Window);
-
 	// read color buffer
 	{
-		glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
-		glReadPixels(0, 0, GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, GL_RGB, GL_UNSIGNED_BYTE, this->m_FrameBuffer);
+		//glReadBuffer(GL_COLOR_ATTACHMENT0_EXT);
+	
+		glReadPixels(
+			0, 0, // x, y
+			GAME_WINDOW_WIDTH, GAME_WINDOW_HEIGHT, // w, h
+			GL_RGB, // format
+			GL_UNSIGNED_BYTE, // type
+			this->m_FrameBuffer); // buffer
 
+		unsigned char* asByteArray = (unsigned char*)this->m_FrameBuffer;
 		// FLIP IMAGE ON X-AXIS
 		for (int y = 0; y < GAME_WINDOW_HEIGHT / 2; ++y)
 		{
@@ -211,20 +214,24 @@ void RenderSystem::PostUpdate(float dt)
 				int i = ((y * GAME_WINDOW_WIDTH) + x) * 3;
 				int j = (((GAME_WINDOW_HEIGHT - 1 - y) * GAME_WINDOW_WIDTH) + x) * 3;
 
-				unsigned char tmpR = this->m_FrameBuffer[i];
-				unsigned char tmpG = this->m_FrameBuffer[i + 1];
-				unsigned char tmpB = this->m_FrameBuffer[i + 2];
+				unsigned char tmpR = asByteArray[i];
+				unsigned char tmpG = asByteArray[i + 1];
+				unsigned char tmpB = asByteArray[i + 2];
 
-				this->m_FrameBuffer[i] = this->m_FrameBuffer[j];
-				this->m_FrameBuffer[i + 1] = this->m_FrameBuffer[j + 1];
-				this->m_FrameBuffer[i + 2] = this->m_FrameBuffer[j + 2];
+				asByteArray[i] = asByteArray[j];
+				asByteArray[i + 1] = asByteArray[j + 1];
+				asByteArray[i + 2] = asByteArray[j + 2];
 
-				this->m_FrameBuffer[j] = tmpR;
-				this->m_FrameBuffer[j + 1] = tmpG;
-				this->m_FrameBuffer[j + 2] = tmpB;
+				asByteArray[j] = tmpR;
+				asByteArray[j + 1] = tmpG;
+				asByteArray[j + 2] = tmpB;
 			}
 		}
 	}
+
+	// Swap Buffers and bring new rendered OpenGL content to the front
+	SDL_GL_SwapWindow(this->m_Window);
+	
 	// Check for errors
 	glGetLastError();
 }
